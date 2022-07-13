@@ -3,8 +3,8 @@ import { Routes,Route,BrowserRouter } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Expense from './pages/Expenses/Expenses'
-import Signin from './pages/Login/Signin'
-import Signup from './pages/Login/Signup'
+import Signin from './pages/login/Signin'
+import Signup from './pages/login/Signup'
 
 export default function App() {
   return (
