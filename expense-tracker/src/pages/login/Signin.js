@@ -21,7 +21,8 @@ function Signin() {
                     </div>
                     <span> Forget password</span>
                         </div>       
-                        <button>Sign in</button>                          
+                        <button>Sign in</button>   
+                        <button id='signByGoogle'></button>                           
                 </form>
                 <div className='form-hint2'>
                     <span>Don't have an account?</span>
