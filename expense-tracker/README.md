@@ -8,9 +8,9 @@
 ## How component files are organized
 Create a new folder in which to store all the files needed for this component, such as css, js, img, etc.
  - templates
-    Login--Folder name
-        login.js
-        login.css
-        login.png
+    -Login--Folder name
+        -login.js
+        -login.css
+        -login.png
 ## About git 
 Please operate on the dev branch
