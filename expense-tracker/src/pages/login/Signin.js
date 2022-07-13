@@ -1,8 +1,6 @@
 import React from 'react'
 import './sign.css';
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans&display=swap" rel="stylesheet">
+
 
 function Signin() {
     return (
