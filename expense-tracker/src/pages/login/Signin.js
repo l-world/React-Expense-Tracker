@@ -24,7 +24,7 @@ function Signin() {
                         <button>Sign in</button>                          
                 </form>
                 <div className='form-hint2'>
-                    <span>Don’t have an account?</span>
+                    <span>Don't have an account?</span>
                     <span> Sign up for free</span>
                 </div>
             </div>
