@@ -39,6 +39,9 @@ export function AuthContextProvider({ children }) {
             setLoading(false);
         });
     }, []);
+    // onAuthStateChanged(auth,(user)=>{
+    //     if(user){
+    //         getUserName = auth.currentUser.displayName;
 
     return (
         <AuthContext.Provider value={{ currentUser, signup, login, logout }}>
