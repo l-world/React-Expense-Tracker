@@ -3,13 +3,13 @@
 }
 
 .sign-main {
-    padding-left: 8%;
+    padding-left: 10%;
     padding-top: 40px;
     display: flex;
     flex-direction: column;
     margin-left: 0px;
     margin-right: auto;
-    width: 30%;
+    width: 33%;
 }
 
 .sign-main h1 {
@@ -19,7 +19,7 @@
     font-size: 30px;
     color: #1B212D;
     margin-bottom: 5px;
-    
+
 }
 
 .sign-image {
@@ -32,15 +32,17 @@
     height: 30px;
     margin-bottom: 80px;
 }
-span{
+
+span {
     font-family: 'Kumbh Sans';
     font-style: normal;
     font-weight: 550;
     font-size: 14px;
     line-height: 17px;
-    color:#1B212D;
+    color: #1B212D;
     margin-bottom: 5px;
-    }
+}
+
 .sign-logo-slogan {
     color: #78778B;
     font-family: 'Kumbh Sans';
@@ -57,65 +59,115 @@ span{
 }
 
 
-.form-text{
-    font-family: 'Kumbh Sans';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color:#78778B;
+.form-text {
     padding: 10px;
     margin-bottom: 15px;
-    border: solid 1px #999;
+    border: solid 1px RGB(230, 230, 230);
     border-radius: 8px;
 }
 
-.form-hint1{
+.form-hint1 {
     display: flex;
     align-items: baseline;
     text-align: justify;
     justify-content: space-between;
+    font-family: 'Kumbh Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 15px;
 }
 
-input[type="checkbox"]{
-    zoom:130%;
+.checkbox {
+    zoom: 130%;
     margin: 0px;
 }
 
-#remember + label{
+.checkbox+label {
     font-family: 'Kumbh Sans';
     font-style: normal;
     font-weight: 550;
     font-size: 14px;
-    line-height: 17px;
-    color:#1B212D;
+    color: #1B212D;
     margin-bottom: 5px;
     margin-left: 5px;
 }
 
-form > button{
-    margin-top: 15px;
+form>button {
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 14px 20px;
-width: 100%;
-height: 48px;
-border: none;
-background: #C8EE44;
-border-radius: 10px;
-font-family: 'Kumbh Sans';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 20px;
-color: #1B212D;
-}
-#signByGoogle{
-    background:white;
-}
-
-.signInButton{
     width: 100%;
-height: 48px;
-border: none;
-border-radius: 10px;
+    height: 48px;
+    border: none;
+    background: #C8EE44;
+    border-radius: 10px;
+    font-family: 'Kumbh Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #1B212D;
+    cursor: pointer;
 }
 
+#signByGoogle {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border: solid 1px RGB(230, 230, 230);
+    color: #78778B;
+    cursor: pointer;
+}
+
+#signByGoogle>img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+
+.form-hint2 {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start;
+    text-align:center;
+    justify-content:center;
+    font-family: 'Kumbh Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #78778B;
+
+
+}
+.sign-guide-link{
+    color:black;
+    cursor: pointer;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+.sign-guide1{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
+    margin-left: 10px;
+
+}
+.sign-guide2{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 25%;
+    margin-left: 10px;
+
+}
+.sign-guide-img1{
+    width:80%
+}
+.sign-guide-img2{
+    width:60%
+}
