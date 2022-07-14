@@ -6,16 +6,16 @@ import dashboardIcon from './Icon/dashboard.svg'
 import expenseIcon from './Icon/expense.svg'
 import settingIcon from './Icon/setting.svg'
 import footerIcon from './Icon/footer.svg'
-import { useAuth } from '../../components/AuthContext'
+// import { useAuth } from '../../components/AuthContext'
 
 
 export default function Navbar() {
-    const { currentUser, logout } = useAuth()
+    /* const { currentUser, logout } = useAuth()
     function handleClick(){
         logout()
         .then((cred)=>{console.log("log out :"+cred.user)})
         .catch((error)=>{console.log(error)})
-    }
+    } */
 
     return (
         <div className='navbar'>
@@ -39,18 +39,10 @@ export default function Navbar() {
                     </NavLink>
                 </nav>
             </div>
-<<<<<<< HEAD
-            {currentUser &&
-            <footer className="navbar__footer">
-                <img src={footerIcon} alt="footer-iocn" />
-                <button onClick={handleClick}>Logout</button>
-            </footer>}
-=======
             <div className="navbar__logout">
                 <img src={footerIcon} alt="footer-iocn" className='navbar__logout__icon' />
                 <span className="navbar__logout__text">Logout</span>
             </div>
->>>>>>> bdfa79b1abe9e9e59affcefa564c255f99134906
         </div>
     )
 }
