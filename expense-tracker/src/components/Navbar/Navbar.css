@@ -1,5 +1,83 @@
 .navbar{
-    width: 250px;
-    padding: 129px 25px 100px;
+    position: relative;
+    min-width: 250px;
+    height: 100vh;
     background: #FAFAFA;
+    overflow: hidden;
+    padding-left: 25px;
+}
+.navbar__logo{
+    margin-top: 35.5px;
+    width: 122px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.navbar__logo__icon{
+    width: 30px;
+    height: 30px;
+    background-image: url("./Icon/logo.svg");
+    background-repeat: no-repeat;
+    background-position: left;
+}
+.navbar__logo__title{
+    font-family: 'Gordita';
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #1B212D;
+    margin-left: 12px;
+}
+.navbar__main{
+    width: 200px;
+    margin-top: 40px;
+}
+.navbar__main__nav{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.navbar__main__nav__link{
+    text-decoration: none;
+    padding: 15.5px 0;
+    padding-left: 16.66px;
+}
+.navbar__main__nav__link.active{
+    background: #C8EE44;
+    border-radius: 8px;
+}
+.navbar__main__nav__link__icon{
+    vertical-align: middle;
+    margin-right: 13.66px;
+}
+.navbar__main__nav__text{
+    font-family: 'Kumbh Sans';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #929EAE;
+}
+.navbar__main__nav__link.active > .navbar__main__nav__text{
+    font-weight: 700;
+    color: #1B212D;
+}
+.navbar__logout{
+    position: absolute;
+    bottom: 6.5px;
+    width: 200px;
+    height: 48px;
+    line-height: 48px;
+    cursor: pointer;
+}
+.navbar__logout__icon{
+    vertical-align: middle;
+    margin-left: 12px;
+}
+.navbar__logout__text{
+    font-family: 'Kumbh Sans';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #929EAE;
+    margin-left: 14.7px;
 }
