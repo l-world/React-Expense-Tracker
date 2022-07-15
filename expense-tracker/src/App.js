@@ -4,12 +4,16 @@ import Navbar from './components/Navbar/Navbar'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Setting from './pages/Setting/Setting'
 import Expense from './pages/Expenses/Expenses'
-import Signin from './pages/login/Signin'
-import Signup from './pages/login/Signup'
+import Signin from './pages/Login/Signin'
+import Signup from './pages/Login/Signup'
+import {AuthContextProvider} from "./components/AuthContext"
+import PrivateRoute from "./components/PrivateRoute"
+import ForgetPW from './pages/Login/ForgetPW'
 
 export default function App() {
     return (
         <BrowserRouter>
+        <AuthContextProvider>
             <div className='app'>
                 <div className="app__body">
                     <Navbar />
@@ -18,15 +22,17 @@ export default function App() {
                         <Routes >
                             <Route path="/" element={<Dashboard />} />
                             <Route path="expense" element={<Expense />} />
-                            <Route path="setting" element={<Setting />} />
+                            <Route path="setting" element={<PrivateRoute><Setting /></PrivateRoute>} />
                             <Route path="login" element={<Signin />} />
                             <Route path="sign-up" element={<Signup />} />
+                            <Route path="forgetPassWord" element={<ForgetPW />} />
                         </Routes>
                     </div >
 
                 </div>
 
             </div>
+            </AuthContextProvider>
         </BrowserRouter>
     )
 }

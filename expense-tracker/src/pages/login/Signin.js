@@ -5,12 +5,17 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 
 function Signin() {
-    const { currentUser, login } = useAuth()
+    const { currentUser, login,loginGoogle } = useAuth()
 
     const [loginData, setLoginData] = React.useState({
-        email: "",
-        password: "",
+        email: null,
+        password: null,
     })
+    const [errData, setErrData] = React.useState({
+        email: null,
+        password: null
+    })
+
     function handleChange(e) {
         const { type, value } = e.target;
         setLoginData((prev) => ({ ...prev, [type]: value }))
@@ -19,6 +24,11 @@ function Signin() {
     const navigate = useNavigate()
     function handleSubmit(e) {
         e.preventDefault();
+        isValidEmail();
+        isValidPassword();
+        if (errData) return;
+
+        //login firebase
         login(loginData.email, loginData.password)
             .then((cred) => {
                 console.log(cred.user)
@@ -27,6 +37,40 @@ function Signin() {
             .catch((err) => { console.log(err) })
     }
 
+    //validator
+    const emailValidator = /^\S+@\S+\.\S+$/;
+    function isValidEmail() {
+        if (emailValidator.test(loginData.email) === false) {
+            setErrData((prev) => ({
+                ...prev,
+                email: "Please enter valid email"
+            }))
+        }
+        else {
+            setErrData((prev) => ({
+                ...prev,
+                email: null
+            }))
+        }
+    }
+    function isValidPassword() {
+        if (loginData.password.length < 1) {
+            setErrData((prev) => ({
+                ...prev,
+                password: "Please enter password"
+            }))
+        }
+        else {
+            setErrData((prev) => ({
+                ...prev,
+                password: null
+            }))
+        }
+    }
+    function handleGoogle(e){
+            e.preventDefault();
+            loginGoogle()
+    }
 
     return (
         <div>
@@ -40,20 +84,22 @@ function Signin() {
                         <span className='sign-logo-slogan'>Welcome back! Please enter your details</span>
                         <form className='sign-form'>
                             <span> Email</span>
-                            <input className='form-text' type="email" onChange={handleChange} placeholder='Enter your email' />
+                            <input className='form-text' type="email" onChange={handleChange} onBlur={isValidEmail} placeholder='Enter your email' />
+                            {errData.email && <span className='err'>{errData.email}</span>}
                             <span>Password</span>
-                            <input className='form-text' type="password" onChange={handleChange} placeholder='Enter your password' />
+                            <input className='form-text' type="password" onChange={handleChange} onBlur={isValidPassword} placeholder='Enter your password' />
+                            {errData.password && <span className='err'>{errData.password}</span>}
                             <div className='form-hint1'>
                                 <div>
                                     <input className='checkbox' type="checkbox" id='remember' name="remember" />
                                     <label htmlFor="remember">Remember for 30 Days</label>
                                 </div>
-                                <span> Forget password</span>
+                                <Link className="sign-guide-forgetPW" to="/forgetPassWord"> Forget password</Link>
                             </div>
                             <button onClick={handleSubmit} >Sign in</button>
-                            <button id='signByGoogle'>
+                            <button id='signByGoogle' onClick={handleGoogle}>
                                 <img src='./images/Google.png' alt='btnImg' />
-                                Sign up with google
+                                Sign in with google
                             </button>                </form>
                         <div className='form-hint2'>
                             Don't have an account?
@@ -63,7 +109,7 @@ function Signin() {
                             </div>
                         </div>
                     </div>
-                    <img className='sign-image' src='./images/sign.png' alt='sign' />
+                    <div className='sign-image' ></div>
                 </div>
             }
         </div>
