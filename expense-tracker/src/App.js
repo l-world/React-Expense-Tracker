@@ -4,11 +4,11 @@ import Navbar from './components/Navbar/Navbar'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Setting from './pages/Setting/Setting'
 import Expense from './pages/Expenses/Expenses'
-import Signin from './pages/Login/Signin'
-import Signup from './pages/Login/Signup'
+import Signin from './pages/login/Signin'
+import Signup from './pages/login/Signup'
 import {AuthContextProvider} from "./components/AuthContext"
 import PrivateRoute from "./components/PrivateRoute"
-import ForgetPW from './pages/Login/ForgetPW'
+import ForgetPW from './pages/login/ForgetPW'
 
 export default function App() {
     return (
