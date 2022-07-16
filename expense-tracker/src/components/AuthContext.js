@@ -6,6 +6,7 @@ import {
     signInWithEmailAndPassword,
     signOut,
     signInWithPopup,
+    sendPasswordResetEmail
   } from 'firebase/auth';
 
 const AuthContext = React.createContext()
@@ -38,6 +39,14 @@ export function AuthContextProvider({ children }) {
         signInWithPopup(auth, provider)
     }
 
+    function forgetPassWord(email){
+        sendPasswordResetEmail(auth,email,{url:'http://localhost:3000/login'})
+        .then(()=>{    
+          console.log(email)
+          alert("we successfully sent you an email with password reset link!")
+        })
+        .catch((err)=>console.log(err))
+    }
     React.useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             console.log(user)
@@ -50,7 +59,7 @@ export function AuthContextProvider({ children }) {
     //         getUserName = auth.currentUser.displayName;
 
     return (
-        <AuthContext.Provider value={{ currentUser, signup, login, logout ,loginGoogle}}>
+        <AuthContext.Provider value={{ currentUser, signup, login, logout ,loginGoogle,forgetPassWord}}>
             {!loading && children}
         </AuthContext.Provider>
     );
