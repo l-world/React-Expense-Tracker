@@ -76,7 +76,7 @@ function Setting() {
             {/* onChange={handleChange} onBlur={isValidPassword} */}
           </div>
           <div className='setting__main__content_4'>
-            {editState&&<button className='setting__main__content_submit'>Update</button>}
+            {editState&&<button className='setting__main__content_submit' onClick={handleSubmit}>Update</button>}
           </div>
         </form>
       </section>
