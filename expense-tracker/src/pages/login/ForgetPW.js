@@ -1,28 +1,29 @@
 import React from 'react';
-import { auth} from '../../firebase-config';
-import { sendPasswordResetEmail } from 'firebase/auth';
+import { useAuth } from '../../components/AuthContext'
+
 
 
 
 function ForgetPW() {
 
-  const [email, setData] = React.useState(null)
+  const { forgetPassWord } = useAuth()
+
+  const [email, setEmail] = React.useState(null)
 
   const [errData, setErrData] = React.useState( null)
 
   function handleChange(e) {
-    const value  = e.target.value
-    setData(value)
+    setEmail(e.target.value)
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     isValidEmail();
     if (errData) return;
-    sendPasswordResetEmail(auth,email)//???????????
-    .then(()=>alert("we successfully sent you an email with password reset link!"))
-    .catch((err)=>console.log(err))
+    forgetPassWord(email)
   }
+
+
   //validator
   const emailValidator = /^\S+@\S+\.\S+$/;
   function isValidEmail() {
