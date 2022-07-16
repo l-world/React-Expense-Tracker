@@ -19,34 +19,34 @@ export default function Table(props) {
                 </thead>
                 <tbody className='table__body'>
                     <tr className='table__body_row'>
-                        <td className='table__body_row_name'>
+                        <td className='table__body_column_name'>
                             <Group />
                         </td>
-                        <td className='table__body_row_text text--gray'>Mobile</td>
-                        <td className='table__body_row_text text--black'>$420.84</td>
-                        <td className='table__body_row_text  text--gray'>14 Apr 2022</td>
-                        {props.show ? <td>MGL0124877</td> : ''}
-                        {props.show ? <td><button>Edit</button></td> : ''}
+                        <td className='table__body_column_text text--gray'>Mobile</td>
+                        <td className='table__body_column_text text--black'>$420.84</td>
+                        <td className='table__body_column_text  text--gray'>14 Apr 2022</td>
+                        {props.show ? <td className='table__body_column_text text--invoice'>MGL0124877</td> : ''}
+                        {props.show ? <td><button className='table__body_column_btn text--black table__body_column_text'>Edit</button></td> : ''}
                     </tr>
                     <tr className='table__body_row'>
-                        <td className='table__body_row_name'>
+                        <td className='table__body_column_name'>
                             <Group />
                         </td>
-                        <td className='table__body_row_text text--gray'>Entertainment</td>
-                        <td className='table__body_row_text text--black'>$420.84</td>
-                        <td className='table__body_row_text  text--gray'>14 Apr 2022</td>
-                        {props.show ? <td>MGL0124877</td> : ''}
-                        {props.show ? <td><button>Edit</button></td> : ''}
+                        <td className='table__body_column_text text--gray'>Entertainment</td>
+                        <td className='table__body_column_text text--black'>$420.84</td>
+                        <td className='table__body_column_text  text--gray'>14 Apr 2022</td>
+                        {props.show ? <td className='table__body_column_text text--invoice'>MGL0124877</td> : ''}
+                        {props.show ? <td><button className='table__body_column_btn text--black table__body_column_text'>Edit</button></td> : ''}
                     </tr>
                     <tr className='table__body_row'>
-                        <td className='table__body_row_name'>
+                        <td className='table__body_column_name'>
                             <Group />
                         </td>
-                        <td className='table__body_row_text text--gray'>Mobile</td>
-                        <td className='table__body_row_text text--black'>$420.84</td>
-                        <td className='table__body_row_text  text--gray'>14 Apr 2022</td>
-                        {props.show ? <td>MGL0124877</td> : ''}
-                        {props.show ? <td><button>Edit</button></td> : ''}
+                        <td className='table__body_column_text text--gray'>Mobile</td>
+                        <td className='table__body_column_text text--black'>$420.84</td>
+                        <td className='table__body_column_text  text--gray'>14 Apr 2022</td>
+                        {props.show ? <td className='table__body_column_text text--invoice'>MGL0124877</td> : ''}
+                        {props.show ? <td><button className='table__body_column_btn text--black table__body_column_text'>Edit</button></td> : ''}
                     </tr>
                 </tbody>
             </table>
