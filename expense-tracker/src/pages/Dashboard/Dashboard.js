@@ -1,8 +1,12 @@
 import React from 'react'
 import './dashboard.css'
+
 import Avatar from './Icon/avatar.svg'
 import Balance from './Icon/Balance'
 import NetflixIcon from './Icon/nf.svg'
+
+import {LineChart} from '../../components/Chart/Line.js'
+
 
 export default function Dashboard(props) {
 
@@ -66,7 +70,7 @@ export default function Dashboard(props) {
                         </ul>
                     </div>
                     <div className="dashboard__main__content__graph">
-
+                        <LineChart></LineChart>
                     </div>
                     <div className="dashboard__main__content__recent">
 
