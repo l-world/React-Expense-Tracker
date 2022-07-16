@@ -5,8 +5,10 @@ import Avatar from './Icon/avatar.svg'
 import Balance from './Icon/Balance'
 import NetflixIcon from './Icon/nf.svg'
 
-import {LineChart} from '../../components/Chart/Line.js'
-
+import { LineChart } from '../../components/Chart/Line.js'
+import Recentbar from '../../components/Recentbar/Recentbar'
+import Table from '../../components/Table/Table.js'
+import Group from '../../components/Group/Group.js'
 
 export default function Dashboard(props) {
 
@@ -69,27 +71,18 @@ export default function Dashboard(props) {
                             }
                         </ul>
                     </div>
-                    <div className="dashboard__main__content__graph">
-                        <LineChart></LineChart>
+                    <div className="dashboard__main__content__graph content--box">
+                        <LineChart />
                     </div>
-                    <div className="dashboard__main__content__recent">
-
+                    <div className="dashboard__main__content__recent content--box">
+                        <Recentbar title="Recent Expenses"/>
+                        <Table />
                     </div>
                 </section>
                 <section className="dashboard__main__wallet">
-                    <div className="dashboard__main__wallet_title">
-                        <h4 className='dashboard__main__wallet_title_text'>Recurring Expenses</h4>
-                        <h6 className='dashboard__main__wallet_title_btn_text'>View All</h6>
-                        <svg width="6" height="10" viewBox="0 0 6 10" fill="none" className='dashboard__main__wallet_title_btn_icon'>
-                            <path d="M0.442382 1.5575L3.87738 5L0.442383 8.4425L1.49988 9.5L5.99988 5L1.49988 0.5L0.442382 1.5575Z" fill="#29A073" />
-                        </svg>
-                    </div>
+                    <Recentbar title="Recurring Expenses"/>
                     <div className="dashboard__main__wallet_item">
-                        <img src={NetflixIcon} alt="item-img" className='dashboard__main__wallet_item'/>
-                        <div className='dashboard__main__wallet_item_title'>
-                            <h2 className='dashboard__main__wallet_item_title_first'>Netflix Subscription</h2>
-                            <p className='dashboard__main__wallet_item_title_sub'>Netflix</p>
-                        </div>
+                        <Group imgPath={NetflixIcon}/>
                         <h1 className='dashboard__main__wallet_item_cost'>-$132,00</h1>
                     </div>
                 </section>

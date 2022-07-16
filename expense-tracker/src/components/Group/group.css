@@ -1,0 +1,24 @@
+.group{
+    display: flex;
+}
+.group__img{
+    margin-right: 14px;
+}
+.group__content{
+    /* margin-right: auto; */
+}
+.group__content_title{
+    font-family: 'Kumbh Sans';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 17px;
+    color: #1B212D;
+    margin-bottom: 5px;
+}
+.group__content_subtitle{
+    font-family: 'Kumbh Sans';
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #929EAE;
+}

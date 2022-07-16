@@ -1,179 +1,145 @@
-.dashboard{
-    
+.dashboard {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  padding-right: 40px;
+  overflow-y: auto;
 }
 /* top bar */
-.dashboard__topbar{
-    display: flex;
-    align-items: center;
-    margin: 30px 40px 30px 0;
+.dashboard__topbar {
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+  position: fixed;
+  left: 290px;
+  top: 0;
+  right: 0;
+  width: calc(100% -290px);
+  background-color: #ffffff;
+  margin-right: 40px;
+  /* box-shadow: 0px 1px 0px 0px rgba(0, 0, 0,0.1); */
 }
-.dashboard__topbar__title{
-    font-family: 'Kumbh Sans';
-    font-weight: 600;
-    font-size: 25px;
-    line-height: 31px;
-    color: #1B212D;
-    margin-right: auto;
+.dashboard__topbar__title {
+  font-family: "Kumbh Sans";
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 31px;
+  color: #1b212d;
+  margin-right: auto;
 }
-.dashboard__topbar__users{
-    background: #FAFAFA;
-    border-radius: 100px;
-    padding: 6px 15px 6px 7px;
+.dashboard__topbar__users {
+  background: #fafafa;
+  border-radius: 100px;
+  padding: 6px 15px 6px 7px;
 }
-.dashboard__topbar__users_avatar{
-    vertical-align: middle;
-    margin-right: 12px;
+.dashboard__topbar__users_avatar {
+  vertical-align: middle;
+  margin-right: 12px;
 }
-.dashboard__topbar__users_name{
-    font-family: 'Kumbh Sans';
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    color: #1B212D;
-    margin-right: 31.54px;
+.dashboard__topbar__users_name {
+  font-family: "Kumbh Sans";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #1b212d;
+  margin-right: 31.54px;
 }
-.dashboard__topbar__users_arrow{
-    cursor: pointer;
+.dashboard__topbar__users_arrow {
+  cursor: pointer;
 }
 
 /* main */
-.dashboard__main{
-    width: 100%;
-    display: flex;
+.dashboard__main {
+  width: 100%;
+  display: flex;
+  margin-top: 108px;
 }
 /* content */
-.dashboard__main__content{
-    margin-right: 40px;
-    flex: 2;
+.dashboard__main__content {
+  margin-right: 40px;
+  flex: 2;
 }
 
-.dashboard__main__content__cards{
-    width: 100%;
+.dashboard__main__content__cards {
+  width: 100%;
 }
 
-.dashboard__main__content__cards_ul{
-    display: flex;
-    justify-content: space-between;
+.dashboard__main__content__cards_ul {
+  display: flex;
+  justify-content: space-between;
 }
-.dashboard__main__content__card{
-    display: flex;
-    align-items: center;
-    padding: 24px 20px;
-    gap: 15px;
-    width: 222px;
-    background: #F8F8F8;
-    border-radius: 10px;
+.dashboard__main__content__card {
+  display: flex;
+  align-items: center;
+  padding: 24px 20px;
+  gap: 15px;
+  width: 222px;
+  background: #f8f8f8;
+  border-radius: 10px;
 }
-.dashboard__main__content__card--active{
-    background-color: #363A3F;
+.dashboard__main__content__card--active {
+  background-color: #363a3f;
 }
-.dashboard__main__content__card_ellipse{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    background: #EBE8E8;
-    border-radius: 50%;
+.dashboard__main__content__card_ellipse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: #ebe8e8;
+  border-radius: 50%;
 }
-.dashboard__main__content__card_ellipse--active{
-    background-color: #4E5257;
+.dashboard__main__content__card_ellipse--active {
+  background-color: #4e5257;
 }
-.dashboard__main__content__card_total{
-    font-family: 'Kumbh Sans';
+.dashboard__main__content__card_total {
+  font-family: "Kumbh Sans";
 }
-.dashboard__main__content__card_total_title{
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: #929EAE;
+.dashboard__main__content__card_total_title {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #929eae;
 }
-.dashboard__main__content__card_total_cost{
-    font-weight: 700;
-    font-size: 24px;
-    color: #1B212D;
-    margin-top: 10px;
+.dashboard__main__content__card_total_cost {
+  font-weight: 700;
+  font-size: 24px;
+  color: #1b212d;
+  margin-top: 10px;
 }
-.dashboard__main__content__card_total_cost--active{
-    color:#FFFFFF;
+.dashboard__main__content__card_total_cost--active {
+  color: #ffffff;
 }
+.content--box {
+  margin-top: 30px;
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 19px 20px 21px 25px;
+}
+.dashboard__main__content__graph {
+  width: 100%;
+}
+.dashboard__main__content__recent {
+  width: 98%;
+}
+
 /* wallet */
-.dashboard__main__wallet{
-    flex: 1;
-    margin-right:40px ;
-}
-.dashboard__main__wallet_title{
-    display: flex;
-    align-items: center;
-    margin-bottom: 25px;
-}
-.dashboard__main__wallet_title_text{
-    font-family: 'Kumbh Sans';
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    color: #1B212D;
-    margin-right: auto;
-}
-.dashboard__main__wallet_title_btn_text{
-    font-family: 'Kumbh Sans';
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    color: #29A073;
-    cursor: pointer;
-    margin-right: 12.44px;
-}
-.dashboard__main__wallet_title_btn_icon{
-    cursor: pointer;
-}   
-
-.dashboard__main__wallet_item{
-    display: flex;
-}
-.dashboard__main__wallet_item{
-    margin-right: 14px;
-}
-.dashboard__main__wallet_item_title{
-    margin-right: auto;
-}
-.dashboard__main__wallet_item_title_first{
-    font-family: 'Kumbh Sans';
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 17px;
-    color: #1B212D;
-    margin-bottom: 5px;
-}
-.dashboard__main__wallet_item_title_sub{
-    font-family: 'Kumbh Sans';
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    color: #929EAE;
-}
-.dashboard__main__wallet_item_cost{
-    font-family: 'Kumbh Sans';
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    color: #000000;
-    margin-right: -15px;
+.dashboard__main__wallet {
+  flex: 1;
+  /* border: 1px solid green; */
 }
 
-
-.dashboard__main__content__graph{
-    margin-top: 30px;
-    width: 100%;
-    background: #FFFFFF;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    padding: 19px 20px 21px 25px;
+.dashboard__main__wallet_item {
+  display: flex;
+  margin-top: 25px;
 }
-.dashboard__main__content__recent{
-    margin-top: 30px;
-    width: 98%;
-    background: #FFFFFF;
-    border: 1px solid #F5F5F5;
-    border-radius: 10px;
+
+.dashboard__main__wallet_item_cost {
+  font-family: "Kumbh Sans";
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  margin-left: auto;
 }
