@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
-// import logoIcon from './Icon/logo.svg'
 import dashboardIcon from './Icon/dashboard.svg'
 import expenseIcon from './Icon/expense.svg'
 import settingIcon from './Icon/setting.svg'
@@ -18,6 +17,7 @@ export default function Navbar() {
     } 
 
     return (
+        currentUser &&
         <div className='navbar'>
             <div className="navbar__logo">
                 <div className="navbar__logo__icon"></div>
@@ -39,11 +39,12 @@ export default function Navbar() {
                     </NavLink>
                 </nav>
             </div>
-            {currentUser&&
+           
             <div className="navbar__logout" >
                 <img src={footerIcon} alt="footer-iocn" className='navbar__logout__icon' />
                 <span className="navbar__logout__text" onClick={handleClick} >Logout</span>
-            </div>}
+            </div>
         </div>
+    
     )
 }

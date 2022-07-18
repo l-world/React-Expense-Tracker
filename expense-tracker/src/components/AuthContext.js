@@ -41,11 +41,11 @@ export function AuthContextProvider({ children }) {
 
     function forgetPassWord(email){
         sendPasswordResetEmail(auth,email,{url:'http://localhost:3000/login'})
-        .then(()=>{    
-          console.log(email)
-          alert("we successfully sent you an email with password reset link!")
-        })
-        .catch((err)=>console.log(err))
+        // .then(()=>{    
+        //   console.log(email)
+        //   alert("we successfully sent you an email with password reset link!")
+        // })
+        // .catch((err)=>console.log(err))
     }
     React.useEffect(() => {
         onAuthStateChanged(auth, (user) => {

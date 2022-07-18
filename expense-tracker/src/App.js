@@ -11,29 +11,29 @@ import PrivateRoute from "./components/PrivateRoute"
 import ForgetPW from './pages/login/ForgetPW'
 
 export default function App() {
+
     return (
-        <BrowserRouter>
-            <AuthContextProvider>
-                <div className='app'>
-                    <div className="app__body">
+        <div className='app'>
+            <div className="app__body">
+                <BrowserRouter>
+                    <AuthContextProvider >
                         <Navbar />
-                        {/* for debug at current stage :  */}
                         <div className='app__body__routes'>
                             <Routes >
-                                <Route path="/" element={<Dashboard />} />
-                                <Route path="expense" element={<Expense />} />
+                                <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                                <Route path="expense" element={<PrivateRoute><Expense /></PrivateRoute>} />
                                 <Route path="setting" element={<PrivateRoute><Setting /></PrivateRoute>} />
                                 <Route path="login" element={<Signin />} />
                                 <Route path="sign-up" element={<Signup />} />
                                 <Route path="forgetPassWord" element={<ForgetPW />} />
                             </Routes>
                         </div >
+                    </AuthContextProvider>
+                </BrowserRouter>
+            </div>
 
-                    </div>
+        </div>
 
-                </div>
-            </AuthContextProvider>
-        </BrowserRouter>
     )
 }
 
