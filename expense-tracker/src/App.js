@@ -16,12 +16,12 @@ export default function App() {
         <AuthContextProvider>
             <div className='app'>
                 <div className="app__body">
-                    <Navbar />
+                    {<PrivateRoute><Navbar /></PrivateRoute>}
                     {/* for debug at current stage :  */}
                     <div className='app__body__routes'>
                         <Routes >
-                            <Route path="/" element={<Dashboard />} />
-                            <Route path="expense" element={<Expense />} />
+                            <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                            <Route path="expense" element={<PrivateRoute><Expense /></PrivateRoute>} />
                             <Route path="setting" element={<PrivateRoute><Setting /></PrivateRoute>} />
                             <Route path="login" element={<Signin />} />
                             <Route path="sign-up" element={<Signup />} />
