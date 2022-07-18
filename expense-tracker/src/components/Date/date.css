@@ -1,0 +1,62 @@
+.date{
+    position: relative;
+    width: 240px;
+}
+.date__input {
+  position: relative;
+  width: 240px;
+  height: 52px;
+  border-radius: 10px;
+  border: 1px solid rgba(78, 93, 120, 0.2);
+  background-color: #fff;
+  outline: none;
+}
+.date__input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    background-image: url("./Icon/cal.svg");
+    cursor: pointer;
+  }
+.date__text{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Roboto';
+    font-weight: 550;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgba(78, 93, 120, 0.6);
+    margin-left: 46px;
+}
+.text--color{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4E5D78;
+}
+.date__input::-webkit-datetime-edit {
+  background-color: royalblue;
+}
+.date__input::-webkit-datetime-edit-fields-wrapper {
+    display: none;
+}
+/* .date::-webkit-datetime-edit-text {
+  color: black;
+}
+.date::-webkit-datetime-edit-year-field {
+    color: purple;
+}
+.date::-webkit-datetime-edit-month-field {
+  color: blue;
+}
+.date::-webkit-datetime-edit-day-field {
+  color: green;
+} */
+
+/* .date::-webkit-inner-spin-button {
+  display:none;
+}
+ */
+

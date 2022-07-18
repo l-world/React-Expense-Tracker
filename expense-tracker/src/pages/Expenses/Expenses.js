@@ -4,7 +4,7 @@ import './expense.css'
 import Topbar from '../../components/Topbar/Topbar'
 import Table from '../../components/Table/Table'
 import Mask from '../../components/Mask/Mask'
-import Add from './Add.js'
+import Add from '../../components/Form/ExpenseForm.js'
 
 export default function Expenses() {
 
@@ -44,7 +44,9 @@ export default function Expenses() {
                 </section>
             </main>
             {
-                maskStatus && <Mask onClose={ handleCloseMask }>
+                maskStatus 
+                && 
+                <Mask onClose={ handleCloseMask } >
                     <Add />
                 </Mask>
             }

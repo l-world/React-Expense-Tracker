@@ -1,0 +1,190 @@
+/* expense form css */
+.form__group {
+  background: #ffffff;
+  box-shadow: 3px -5px 35px rgba(205, 205, 212, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  width: 580px;
+  margin: auto;
+  margin-top: 3.5em;
+}
+
+.form__input {
+  width: 500px;
+  height: 52px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  text-indent: 24px;
+  margin-bottom: 20px;
+}
+.form__input::placeholder {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(78, 93, 120, 0.6);
+}
+.form__select {
+  margin-bottom: 34px;
+  cursor: pointer;
+  /* A reset of styles, including removing the default dropdown arrow */
+  appearance: none;
+  background-image: url("./Icon/select-arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center right 19px;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #1b212d;
+}
+/* removal of the arrow for lower IE */
+.form__select::-ms-expand {
+  display: none;
+}
+
+.form .form__select > option {
+  color: rgba(78, 93, 120, 0.6);
+
+  font-size: 18px;
+  margin: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.form__row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 34px;
+}
+.form__row__checkbox {
+  position: relative;
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(78, 93, 120, 0.6);
+  padding-left: 30px;
+  margin-left: 25px;
+}
+.form__row__checkbox_input {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  cursor: pointer;
+}
+.form__row__checkbox_checkmark {
+  position: absolute;
+  top: -15px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border: 2px solid #c3cbcd;
+}
+.form__row__checkbox:hover input ~ .form__row__checkbox_checkmark {
+  border-color: #ddd;
+}
+/* .form__row__checkbox input:checked ~ .form__row__checkbox_checkmark {
+    background-color: red;
+  } */
+.form__row__checkbox_checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.form__row__checkbox input:checked ~ .form__row__checkbox_checkmark:after {
+  display: block;
+}
+
+.form__row__checkbox .form__row__checkbox_checkmark:after {
+  left: 5px;
+  top: -2px;
+  width: 8px;
+  height: 15px;
+  border: solid #333;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/* 自定义 图片上传 按钮 */
+.form__img_upload_btn {
+  position: relative;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(119, 119, 119, 0.4) 0%,
+    rgba(35, 35, 35, 0.1) 100%
+  );
+  backdrop-filter: blur(50px);
+}
+.form__img_upload_btn_input {
+  border: none;
+  outline: none;
+}
+.form__img_upload_btn_input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.form__img_upload_btn_input::before {
+  content: "";
+  display: block;
+  height: 50px;
+  width: 50px;
+  background-image: url("./Icon/camera.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.form__img_show {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #333;
+  margin-left: 100px;
+}
+.form__btn{
+    background: #c8ee44;
+    outline: none;
+    border: none;
+    font-family: "Roboto";
+    font-weight: 500;
+}
+.form__btn:active {
+    transform: scale(0.98);
+    transition: all 0.1s;
+}
+.form__btn__add {
+  margin-top: 97px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #1b212d;
+}
+
+.form__btn__edit {
+  text-align: center;
+  margin-top: 97px;
+}
+.form__btn__edit_save{
+    width: 70px;
+    height: 40px;
+    border-radius: 8px;
+}
+.form__btn__edit_cancel{
+    padding: 5px 10px;
+    font-size: 14px;
+    text-align: center;
+    background-color: #f5f5f5;
+    color: rgba(78, 93, 120, 0.6);
+    margin-right: 20px;
+}
