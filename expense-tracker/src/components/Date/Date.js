@@ -8,9 +8,9 @@ export default function Date(props) {
 
     const handleChange = (e) => {
         const date = e.target.value.replace(/-/g, '/');
-        props.onChange && props.onChange(date);
         setDate(date);
-        setFlag(false);
+        e.target.value === '' ? setFlag(true) : setFlag(false);
+        props.handleDateChange && props.handleDateChange(date);
     }
 
     return (
@@ -27,7 +27,7 @@ export default function Date(props) {
                 ?  
                 <span className='date__text'>Date</span>
                 :
-                <span className='date__text text--color'>{date || 'sdjfsl'}</span>
+                <span className='date__text text--color'>{date}</span>
             }
         </div>
     )

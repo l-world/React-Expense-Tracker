@@ -37,16 +37,20 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #1b212d;
+  /* color: #1b212d; */
+  color: rgba(78, 93, 120, 0.6);
+}
+.selected{
+    color: #1b212d;
 }
 /* removal of the arrow for lower IE */
 .form__select::-ms-expand {
   display: none;
 }
 
-.form .form__select > option {
-  color: rgba(78, 93, 120, 0.6);
-
+.form .form__select *{
+    /* display: block; */
+  color: #1b212d;
   font-size: 18px;
   margin: 10px 0;
   border-bottom: 1px solid #eee;
@@ -153,16 +157,16 @@
   border: 1px solid #333;
   margin-left: 100px;
 }
-.form__btn{
-    background: #c8ee44;
-    outline: none;
-    border: none;
-    font-family: "Roboto";
-    font-weight: 500;
+.form__btn {
+  background: #c8ee44;
+  outline: none;
+  border: none;
+  font-family: "Roboto";
+  font-weight: 500;
 }
 .form__btn:active {
-    transform: scale(0.98);
-    transition: all 0.1s;
+  transform: scale(0.98);
+  transition: all 0.1s;
 }
 .form__btn__add {
   margin-top: 97px;
@@ -175,16 +179,16 @@
   text-align: center;
   margin-top: 97px;
 }
-.form__btn__edit_save{
-    width: 70px;
-    height: 40px;
-    border-radius: 8px;
+.form__btn__edit_save {
+  width: 70px;
+  height: 40px;
+  border-radius: 8px;
 }
-.form__btn__edit_cancel{
-    padding: 5px 10px;
-    font-size: 14px;
-    text-align: center;
-    background-color: #f5f5f5;
-    color: rgba(78, 93, 120, 0.6);
-    margin-right: 20px;
+.form__btn__edit_cancel {
+  padding: 5px 10px;
+  font-size: 14px;
+  text-align: center;
+  background-color: #f5f5f5;
+  color: rgba(78, 93, 120, 0.6);
+  margin-right: 20px;
 }
