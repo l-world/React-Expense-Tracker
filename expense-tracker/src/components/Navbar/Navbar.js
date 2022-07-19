@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import dashboardIcon from './Icon/dashboard.svg'
 import expenseIcon from './Icon/expense.svg'
@@ -10,10 +10,10 @@ import { useAuth } from '../../components/AuthContext'
 
 export default function Navbar() {
     const { currentUser,logout } = useAuth()
-    function handleClick(){
-        logout()
-        .then((cred)=>{console.log("log out :"+cred.user)})
-        .catch((error)=>{console.log(error)})
+    const navigate = useNavigate();
+    const handleClick=async () =>{
+		   await logout();
+			navigate('/login');
     } 
 
     return (

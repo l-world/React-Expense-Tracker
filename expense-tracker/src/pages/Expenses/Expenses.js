@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import './expense.css'
+import { useAuth } from '../../components/AuthContext'
+
 
 import Topbar from '../../components/Topbar/Topbar'
 import Table from '../../components/Table/Table'
@@ -7,6 +9,7 @@ import Mask from '../../components/Mask/Mask'
 import Add from '../../components/Form/ExpenseForm.js'
 
 export default function Expenses() {
+    const { currentUser } = useAuth()
 
     const [maskStatus, setMaskStatus] = useState(false)
 
@@ -20,9 +23,7 @@ export default function Expenses() {
     return (
         <>
             <main className="expenses">
-                <Topbar
-                    headTitle="Expenses"
-                />
+                <Topbar headTitle="Expenses" username={currentUser.displayName}/>
                 <section className='expenses__main'>
                     <div className="expenses__main__search">
                         <input type="text" className="expenses__main__search_input" placeholder='Search anything on Transactions' />

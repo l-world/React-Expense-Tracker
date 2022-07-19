@@ -18,8 +18,6 @@ function ForgetPW() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    isValidEmail();
-    if (errData) return;
     forgetPassWord(email)
   }
 
@@ -35,6 +33,7 @@ function ForgetPW() {
     }
   }
 
+  // function isExistedEmail(){}
 
   return (
     <div className='sign'>
@@ -44,9 +43,8 @@ function ForgetPW() {
         <span className='sign-logo-slogan'>Please enter your email</span>
         <form className='sign-form'>
           <span> Email</span>
-          <input className='form-text'  onChange={handleChange} placeholder='Enter your email' />
+          <input className='form-text'  onChange={handleChange} onBlur={isValidEmail} placeholder='Enter your email' />
           {errData && <span className='err'>{errData}</span>}
-
           <button onClick={handleSubmit} >Reset Password</button>
 
         </form>

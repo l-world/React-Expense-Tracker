@@ -1,7 +1,9 @@
 import React from 'react'
 import './sign.css';
 import { useAuth } from '../../components/AuthContext'
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, 
+    // useNavigate
+ } from 'react-router-dom';
 
 
 function Signin() {
@@ -21,20 +23,10 @@ function Signin() {
         setLoginData((prev) => ({ ...prev, [type]: value }))
     }
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     function handleSubmit(e) {
         e.preventDefault();
-        isValidEmail();
-        isValidPassword();
-        if (errData) return;
-
-        //login firebase
         login(loginData.email, loginData.password)
-            .then((cred) => {
-                console.log(cred.user)
-                navigate("/")
-            })
-            .catch((err) => { console.log(err) })
     }
 
     //validator
@@ -54,10 +46,16 @@ function Signin() {
         }
     }
     function isValidPassword() {
-        if (loginData.password.length < 1) {
+     if (loginData.password==null) {
             setErrData((prev) => ({
                 ...prev,
                 password: "Please enter password"
+            }))
+        }
+    else if (loginData.password.length < 8) {
+            setErrData((prev) => ({
+                ...prev,
+                password: "Please enter valid password"
             }))
         }
         else {
@@ -96,7 +94,7 @@ function Signin() {
                                 </div>
                                 <Link className="sign-guide-forgetPW" to="/forgetPassWord"> Forget password</Link>
                             </div>
-                            <button onClick={handleSubmit} >Sign in</button>
+                            <button onClick={handleSubmit} disabled={errData.email||errData.password}>Sign in</button>
                             <button id='signByGoogle' onClick={handleGoogle}>
                                 <img src='./images/Google.png' alt='btnImg' />
                                 Sign in with google

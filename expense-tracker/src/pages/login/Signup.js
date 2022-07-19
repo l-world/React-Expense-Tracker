@@ -1,13 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../components/AuthContext'
-// import { updateProfile } from "firebase/auth";
 import React from 'react'
-
-
 
 function Signup() {
   const { signup } = useAuth()
-  // currentUser, 
 
   const [loginData, setLoginData] = React.useState({
     email: "",
@@ -28,27 +24,8 @@ function Signup() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    isValidEmail();
-    isValidName();
-    isValidPassword();
-    if (errData) return;
-
-    signup(loginData.email, loginData.password)
-      // .then(
-      //   () => {
-      //     if (currentUser) {
-      //       updateProfile({
-      //         displayName: loginData.displayName
-      //       }).then(() => {
-      //         navigate('/');
-      //       })
-      //     }
-      //   })
-      // .catch((error) => {
-      //   alert(error.message);
-      // });
+    signup(loginData.email, loginData.password,loginData.displayName)
   }
-
   //validator
   const emailValidator = /^\S+@\S+\.\S+$/;
   function isValidEmail() {
@@ -109,7 +86,7 @@ function Signup() {
           <input className='form-text' type="password" name="password" onChange={handleChange} onBlur={isValidPassword} placeholder='Enter your password' />
           {errData.password && <span className='err'>{errData.password}</span>}
 
-          <button onClick={handleSubmit} >Create Account</button>
+          <button onClick={handleSubmit} disabled={errData.displayName||errData.email||errData.password}>Create Account</button>
           {/* <button id='signByGoogle'>
             <img src='./images/Google.png' alt='btnImg' />
             Sign up with google

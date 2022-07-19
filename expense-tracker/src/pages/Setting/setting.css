@@ -1,5 +1,4 @@
 
-/* content */
 .setting__main__content{
     margin-left: 30px;
     width: 80%;
@@ -24,6 +23,13 @@
     width: 190px;
     cursor: pointer;
 }
+form span{
+    color: #78778B;
+}
+form input::placeholder{
+    color: black;
+}
+
 .setting__main__content_3{
     grid-column-start: 2;
     grid-column-end: 3;
