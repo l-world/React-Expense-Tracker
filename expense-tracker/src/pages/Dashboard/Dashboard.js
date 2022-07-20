@@ -21,7 +21,7 @@ export default function Dashboard(props) {
 
     return (
         <main className='dashboard'>
-            <Topbar username={currentUser.displayName} />
+            <Topbar avatar={currentUser.photoURL} username={currentUser.displayName} />
             <section className="dashboard__main">
                 <section className="dashboard__main__content">
                     <div className="dashboard__main__content__cards">

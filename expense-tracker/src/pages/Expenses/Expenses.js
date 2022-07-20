@@ -23,7 +23,7 @@ export default function Expenses() {
     return (
         <>
             <main className="expenses">
-                <Topbar headTitle="Expenses" username={currentUser.displayName}/>
+                <Topbar headTitle="Expenses" avatar={currentUser.photoURL} username={currentUser.displayName}/>
                 <section className='expenses__main'>
                     <div className="expenses__main__search">
                         <input type="text" className="expenses__main__search_input" placeholder='Search anything on Transactions' />

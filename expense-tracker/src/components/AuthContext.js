@@ -24,7 +24,7 @@ export function AuthContextProvider({ children }) {
     const [currentUser, setCurrentUser] = React.useState({
         displayName: '',
         email: '',
-        // photoURL:'',
+        photoURL:'',
         uid: '',
 
     });
@@ -83,7 +83,7 @@ export function AuthContextProvider({ children }) {
             //         ...prev,
             //         displayName: user.displayName,
             //         email: user.email,
-            //         // photoURL: user.photoURL,
+                    // photoURL: user.photoURL,
             //         uid : user.uid
             //     }))
             // }

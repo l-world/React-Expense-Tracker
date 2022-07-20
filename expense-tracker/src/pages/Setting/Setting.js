@@ -5,33 +5,35 @@ import { useAuth } from '../../components/AuthContext'
 import { db } from '../../firebase-config'
 
 import {
-  // collection,
-  // getDocs,
+  getDoc,
   doc,
-  // updateDoc,
   setDoc,
-  // query,
-  // where,
   // onSnapshot
 } from 'firebase/firestore'
 
 function Setting() {
-  const { currentUser} = useAuth()
+  const { currentUser } = useAuth()
   const [editState, setEditState] = React.useState(false)
 
-      //user profile setting (not login things)
-      const [userData, setUserData] = React.useState({
-        id: currentUser.uid,
-        firstName: currentUser.displayName,//如果cloud已经有了firsrname的值，优先展示，怎么从firebase取到这个值？
-        lastName: '',
-        dateOfBirth: '',
-        mobilePhone: '',
-        email: currentUser.email////如果cloud已经有了email的值，优先展示，怎么从firebase取到这个值？
-    })
-    const id = currentUser.uid;
-    // const userProfileRef = collection(db, "userProfile");
-    const docRef=doc(db, "userProfile", id)
-    // const userCloudData = getDocs(docRef);
+  const displayName_firstName = currentUser.displayName.split(' ')[0]
+  const displayName_lastName = currentUser.displayName.split(' ')[1]
+  const id = currentUser.uid;
+  const docRef = doc(db, "userProfile", id)
+
+  const [userData, setUserData] = React.useState({
+    id: currentUser.uid,
+    firstName: displayName_firstName,
+    lastName: displayName_lastName,
+    dateOfBirth: '',
+    mobilePhone: '',
+    email: currentUser.email
+  })
+
+
+  function handleChange(e) {
+    const { name, value } = e.target
+    setUserData((prev) => ({ ...prev, [name]: value }))
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -39,38 +41,38 @@ function Setting() {
     updateData(userData)
   }
 
-    function updateData(userData) {
-        setDoc(docRef, userData)
-    }
+  function updateData(userData) {
+    setDoc(docRef, userData)
+  }
 
-    //get realtime user data after page refresh
-    // React.useEffect(() => {
-    //         const remoteDoc =  getDocs(userCloudData);
-    //         const remoteUserData = remoteDoc.data()
-    //         setUserData(remoteUserData);
-    // }, [userCloudData]);
-
-    // function handleEditSubmit(userData) {
-    //     console.log(userData)
-    //     // updateDoc(userData)
-    // }
+  React.useEffect(() => {
+    getDoc(docRef)
+      .then((remoteDoc) => {if(remoteDoc){
+        const remoteUserData = remoteDoc.data()
+        if(!editState){
+        setUserData((prev) => ({
+              ...prev,
+              firstName: remoteUserData.firstName,
+              lastName: remoteUserData.lastName,
+              dateOfBirth: remoteUserData.dateOfBirth,
+              mobilePhone: remoteUserData.mobilePhone,
+              email: remoteUserData.email
+            }))}}
+          })
+      .catch((err) => console.log(err))
+  })
 
   function handleEdit() {
     setEditState(true)
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target
-    setUserData((prev) => ({ ...prev, [name]: value }))
-  }
+  function handlePWChange() { }
 
-  function handlePWChange(){}
-
-  function confirmPWChange(){}
+  function confirmPWChange() { }
 
   return (
     <main className='dashboard'>
-      <Topbar   headTitle="Setting" username={currentUser.displayName}/>
+      <Topbar headTitle="Setting" avatar={currentUser.photoURL} username={currentUser.displayName} />
       <section className="dashboard__main">
         <form className="setting__main__content">
           <div className='setting__main__content_1'>
@@ -86,19 +88,23 @@ function Setting() {
           </div>
           <div className='setting__main__content_4'>
             <span> First Name</span>
-            <input className='form-text' name="firstName" disabled={!editState} onChange={handleChange} value={userData.firstName || 'Enter your full name'} />
+            <input className='form-text' name="firstName" disabled={!editState} onChange={handleChange}
+              value={userData.firstName} placeholder={'Enter your last name'}
+            />
           </div>
           <div className='setting__main__content_4'>
             <span> Last Name</span>
-            <input className='form-text' name="lastName" disabled={!editState} onChange={handleChange} placeholder='Enter your full name' />
+            <input className='form-text' name="lastName" disabled={!editState} onChange={handleChange}
+              value={userData.lastName} placeholder={'Enter your last name'}
+            />
           </div>
           <div className='setting__main__content_4'>
             <span> Date of Birth</span>
-            <input className='form-text' name="dateOfBirth" type="date" disabled={!editState} onChange={handleChange} />
+            <input className='form-text' name="dateOfBirth" type="date" disabled={!editState} onChange={handleChange} value={userData.dateOfBirth} />
           </div>
           <div className='setting__main__content_4'>
             <span> Mobile Number</span>
-            <input className='form-text' name="mobilePhone" type="tel" disabled={!editState} onChange={handleChange} placeholder='Mobile number...' />
+            <input className='form-text' name="mobilePhone" type="tel" disabled={!editState} onChange={handleChange} value={userData.mobilePhone} />
           </div>
           <div className='setting__main__content_5'>
             <span> Email</span>
