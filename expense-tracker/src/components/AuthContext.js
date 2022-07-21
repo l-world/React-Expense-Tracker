@@ -30,6 +30,7 @@ export function AuthContextProvider({ children }) {
 
     });
     const [loading, setLoading] = React.useState(true);
+    const [signErr, setSignErr]=React.useState();
 
     const navigate = useNavigate()
     function signup(email, password, displayNameP) {
@@ -44,7 +45,9 @@ export function AuthContextProvider({ children }) {
                 console.log("did update displayName")
                 navigate('/')
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                setSignErr(error.message);
+                console.log(error.message)})
     }
     function updateDisplayName(firstName, lastName) {
         updateProfile(auth.currentUser, {
@@ -58,7 +61,9 @@ export function AuthContextProvider({ children }) {
                 console.log("signed in")
                 navigate('/')
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                setSignErr(error.message);
+                console.log(error.message)})
     }
 
     function logout() {
@@ -75,13 +80,18 @@ export function AuthContextProvider({ children }) {
                 console.log(email)
                 alert("we successfully sent you an email with password reset link!")
             })
-            .catch((err) => console.log(err))
+            .catch((error) =>  {
+                setSignErr(error.message);
+                console.log(error.message)}
+            )
     }
 
     function updatePW(newPW){
         updatePassword(auth.currentUser,newPW)
         .then(()=>alert("set new password successfully"))
-        .catch((err)=>console.log(err))
+        .catch((error)=>{
+            setSignErr(error.message);
+            console.log(error.message)})
     }
     React.useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -89,12 +99,13 @@ export function AuthContextProvider({ children }) {
             else { console.log("auth change: null") }
             setCurrentUser(user);
             setLoading(false);
+            setSignErr(null);
         })
     }, []);
 
 
     return (
-        <AuthContext.Provider value={{ currentUser, signup, login, logout, loginGoogle, forgetPassWord, setCurrentUser, updateDisplayName,updatePW }}>
+        <AuthContext.Provider value={{ currentUser, signup, login, logout, loginGoogle, signErr,forgetPassWord, setCurrentUser, updateDisplayName,updatePW }}>
             {!loading && children}
         </AuthContext.Provider>
     );

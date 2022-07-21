@@ -6,7 +6,7 @@ import { useAuth } from '../../components/AuthContext'
 
 function ForgetPW() {
 
-  const { forgetPassWord } = useAuth()
+  const { forgetPassWord ,signErr} = useAuth()
 
   const [email, setEmail] = React.useState(null)
 
@@ -43,7 +43,7 @@ function ForgetPW() {
           <input className='form-text'  onChange={handleChange} onBlur={isValidEmail} placeholder='Enter your email' />
           {errData && <span className='err'>{errData}</span>}
           <button onClick={handleSubmit} >Reset Password</button>
-
+          {signErr && <span className='err'>{signErr}</span>}
         </form>
       </div>
       <div className='sign-image' ></div>

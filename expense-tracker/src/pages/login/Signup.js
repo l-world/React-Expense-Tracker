@@ -3,7 +3,7 @@ import { useAuth } from '../../components/AuthContext'
 import React from 'react'
 
 function Signup() {
-  const { signup } = useAuth()
+  const { signup,signErr } = useAuth()
 
   const [loginData, setLoginData] = React.useState({
     email: "",
@@ -87,6 +87,8 @@ function Signup() {
           {errData.password && <span className='err'>{errData.password}</span>}
 
           <button onClick={handleSubmit} disabled={errData.displayName||errData.email||errData.password}>Create Account</button>
+          {signErr && <span className='err'>{signErr}</span>}
+
           {/* <button id='signByGoogle'>
             <img src='./images/Google.png' alt='btnImg' />
             Sign up with google

@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore'
 
 function Setting() {
-  const { currentUser, setCurrentUser, updateDisplayName, updatePW } = useAuth()
+  const { currentUser, setCurrentUser, updateDisplayName, updatePW ,signErr} = useAuth()
   const [editState, setEditState] = React.useState(false)
   const displayName_firstName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[0] : currentUser.displayName
   const displayName_lastName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[1]
@@ -196,6 +196,8 @@ function Setting() {
           </div>
           <div className='setting__main__content_4'>
             {editState && <button className='setting__main__content_submit' onClick={handleSubmit}>Update</button>}
+            {signErr && <span className='err'>{signErr}</span>}
+
           </div>
         </form>
       </section>

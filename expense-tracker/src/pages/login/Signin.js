@@ -7,7 +7,7 @@ import { Link, Navigate,
 
 
 function Signin() {
-    const { currentUser, login,loginGoogle } = useAuth()
+    const { currentUser, login,loginGoogle,signErr } = useAuth()
 
     const [loginData, setLoginData] = React.useState({
         email: null,
@@ -95,6 +95,8 @@ function Signin() {
                                 <Link className="sign-guide-forgetPW" to="/forgetPassWord"> Forget password</Link>
                             </div>
                             <button onClick={handleSubmit} disabled={errData.email||errData.password}>Sign in</button>
+                            {signErr && <span className='err'>{signErr}</span>}
+
                             <button id='signByGoogle' onClick={handleGoogle}>
                                 <img src='./images/Google.png' alt='btnImg' />
                                 Sign in with google
