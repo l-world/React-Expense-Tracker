@@ -22,7 +22,6 @@ function ForgetPW() {
   }
 
 
-  //validator
   const emailValidator = /^\S+@\S+\.\S+$/;
   function isValidEmail() {
     if (emailValidator.test(email) === false) {
@@ -32,8 +31,6 @@ function ForgetPW() {
       setErrData(null)
     }
   }
-
-  // function isExistedEmail(){}
 
   return (
     <div className='sign'>

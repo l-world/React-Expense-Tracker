@@ -6,7 +6,8 @@ import {
     signInWithEmailAndPassword,
     signOut,
     signInWithPopup,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    updatePassword
 } from 'firebase/auth';
 import { updateProfile } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
@@ -76,6 +77,12 @@ export function AuthContextProvider({ children }) {
             })
             .catch((err) => console.log(err))
     }
+
+    function updatePW(newPW){
+        updatePassword(auth.currentUser,newPW)
+        .then(()=>alert("set new password successfully"))
+        .catch((err)=>console.log(err))
+    }
     React.useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user !== null) { console.log(`auth change:${user.uid}   ${user.displayName}`) }
@@ -87,7 +94,7 @@ export function AuthContextProvider({ children }) {
 
 
     return (
-        <AuthContext.Provider value={{ currentUser, signup, login, logout, loginGoogle, forgetPassWord, setCurrentUser, updateDisplayName }}>
+        <AuthContext.Provider value={{ currentUser, signup, login, logout, loginGoogle, forgetPassWord, setCurrentUser, updateDisplayName,updatePW }}>
             {!loading && children}
         </AuthContext.Provider>
     );

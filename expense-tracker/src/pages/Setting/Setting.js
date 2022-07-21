@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore'
 
 function Setting() {
-  const { currentUser, setCurrentUser, updateDisplayName } = useAuth()
+  const { currentUser, setCurrentUser, updateDisplayName, updatePW } = useAuth()
   const [editState, setEditState] = React.useState(false)
   const displayName_firstName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[0] : currentUser.displayName
   const displayName_lastName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[1]
@@ -47,6 +47,7 @@ function Setting() {
     setDoc(docRef, userData)
       .then(() => {
         updateDisplayName(userData.firstName, userData.lastName)
+        if(PW.confPW===PW.newPW&&PWErr.confPWErr==null){ updatePW(PW.confPW)}
       })
       .catch((error) => console.log(error))
   }
@@ -82,9 +83,65 @@ function Setting() {
     setEditState(true)
   }
 
-  function handlePWChange() { }
+  const [PW, setPW] = React.useState({
+    newPW: "",
+    confPW: ""
+  })
+  const [PWErr, setPWErr] = React.useState({
+    emailErr:"",
+    newPWErr: "",
+    confPWErr: ""
+  })
+  function handlePWChange(e) {
+    const { name, value } = e.target
+    setPW((prev) => ({
+      ...prev,
+      [name]: value
+    }))}
 
-  function confirmPWChange() { }
+  const emailValidator = /^\S+@\S+\.\S+$/;
+  function isValidEmail() {
+    if (emailValidator.test(userData.email) === false) {
+      setPWErr((prev) => ({
+        ...prev,
+        emailPWErr: "Please enter valid email"
+      }))
+    }
+    else {
+      setPWErr((prev) => ({
+        ...prev,
+        emailPWErr: null
+      }))
+    }
+  }
+  function isValidPW() {
+    if (PW.newPW.length<8) {
+      setPWErr((prev) => ({
+        ...prev,
+        newPWErr: "Please enter valid email"
+      }))
+    }
+    else {
+      setPWErr((prev) => ({
+        ...prev,
+        newPWErr: null
+      }))
+    }
+  }
+  function isValidConfPW() {
+    if (PW.newPW !== PW.confPW) {
+      setPWErr((prev) => ({
+        ...prev,
+        confPWErr: "not same"
+      }))
+    }
+    else {
+      setPWErr((prev) => ({
+        ...prev,
+        confPWErr: null
+      }))
+    }
+  }
 
   return (
     <main className='dashboard'>
@@ -124,18 +181,18 @@ function Setting() {
           </div>
           <div className='setting__main__content_5'>
             <span> Email</span>
-            <input className='form-text' type="email" name="email" disabled={!editState} onChange={handleChange} value={userData.email} />
-            {/*onBlur={isValidEmail}  */}
+            <input className='form-text' type="email" name="email" disabled={!editState} onChange={handleChange} value={userData.email} onBlur={isValidEmail} />
+            {PWErr.email && <span className='err'>{PWErr.emailErr}</span>}
           </div>
           <div className='setting__main__content_4'>
             <span>New Password</span>
-            <input className='form-text' type="password" name="NewPW" disabled={!editState} onChange={handlePWChange} placeholder='Enter your password' />
-            {/* onBlur={isValidPassword} */}
+            <input className='form-text' type="password" name="newPW" disabled={!editState} onChange={handlePWChange} onBlur={isValidPW} placeholder='Enter your password' />
+            {PWErr.newPWErr && <span className='err'>{PWErr.newPWErr}</span>}
           </div>
           <div className='setting__main__content_4'>
             <span>Confirm Password</span>
-            <input className='form-text' type="password" name="ConfirmPW" disabled={!editState} onChange={confirmPWChange} placeholder='Enter your password' />
-            {/*onBlur={isSamePassword} */}
+            <input className='form-text' type="password" name="confPW" disabled={!editState} onChange={handlePWChange} onBlur={isValidConfPW} placeholder='Enter your password' />
+            {PWErr.confPWErr && <span className='err'>{PWErr.confPWErr}</span>}
           </div>
           <div className='setting__main__content_4'>
             {editState && <button className='setting__main__content_submit' onClick={handleSubmit}>Update</button>}
