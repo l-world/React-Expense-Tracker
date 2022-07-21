@@ -1,5 +1,5 @@
 import React from 'react'
-import { auth, provider} from '../firebase-config'
+import { auth, provider } from '../firebase-config'
 import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
@@ -24,7 +24,7 @@ export function AuthContextProvider({ children }) {
     const [currentUser, setCurrentUser] = React.useState({
         displayName: '',
         email: '',
-        photoURL:'',
+        photoURL: '',
         uid: '',
 
     });
@@ -45,7 +45,11 @@ export function AuthContextProvider({ children }) {
             })
             .catch((error) => console.log(error))
     }
-
+    function updateDisplayName(firstName, lastName) {
+        updateProfile(auth.currentUser, {
+            displayName: `${firstName} ${lastName}`
+        })
+    }
     function login(email, password) {
         console.log("logining")
         signInWithEmailAndPassword(auth, email, password)
@@ -66,11 +70,11 @@ export function AuthContextProvider({ children }) {
 
     function forgetPassWord(email) {
         sendPasswordResetEmail(auth, email, { url: 'http://localhost:3000/login' })
-        // .then(()=>{    
-        //   console.log(email)
-        //   alert("we successfully sent you an email with password reset link!")
-        // })
-        // .catch((err)=>console.log(err))
+            .then(() => {
+                console.log(email)
+                alert("we successfully sent you an email with password reset link!")
+            })
+            .catch((err) => console.log(err))
     }
     React.useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -78,22 +82,12 @@ export function AuthContextProvider({ children }) {
             else { console.log("auth change: null") }
             setCurrentUser(user);
             setLoading(false);
-            // if (user !== null) {
-            //     setCurrentUser((prev)=>({
-            //         ...prev,
-            //         displayName: user.displayName,
-            //         email: user.email,
-                    // photoURL: user.photoURL,
-            //         uid : user.uid
-            //     }))
-            // }
         })
     }, []);
 
 
-
     return (
-        <AuthContext.Provider value={{ currentUser, signup, login, logout, loginGoogle, forgetPassWord }}>
+        <AuthContext.Provider value={{ currentUser, signup, login, logout, loginGoogle, forgetPassWord, setCurrentUser, updateDisplayName }}>
             {!loading && children}
         </AuthContext.Provider>
     );

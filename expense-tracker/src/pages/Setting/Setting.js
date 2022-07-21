@@ -12,11 +12,12 @@ import {
 } from 'firebase/firestore'
 
 function Setting() {
-  const { currentUser } = useAuth()
+  const { currentUser, setCurrentUser, updateDisplayName } = useAuth()
   const [editState, setEditState] = React.useState(false)
+  const displayName_firstName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[0] : currentUser.displayName
+  const displayName_lastName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[1]
+    : "";
 
-  const displayName_firstName = currentUser.displayName.split(' ')[0]
-  const displayName_lastName = currentUser.displayName.split(' ')[1]
   const id = currentUser.uid;
   const docRef = doc(db, "userProfile", id)
 
@@ -39,26 +40,41 @@ function Setting() {
     e.preventDefault();
     setEditState(false)
     updateData(userData)
+
   }
 
   function updateData(userData) {
     setDoc(docRef, userData)
+      .then(() => {
+        updateDisplayName(userData.firstName, userData.lastName)
+      })
+      .catch((error) => console.log(error))
   }
+
 
   React.useEffect(() => {
     getDoc(docRef)
-      .then((remoteDoc) => {if(remoteDoc){
-        const remoteUserData = remoteDoc.data()
-        if(!editState){
-        setUserData((prev) => ({
+      .then((remoteDoc) => {
+        if (remoteDoc) {
+          const remoteUserData = remoteDoc.data()
+          if (!editState) {
+            setUserData((prev) => ({
               ...prev,
               firstName: remoteUserData.firstName,
               lastName: remoteUserData.lastName,
               dateOfBirth: remoteUserData.dateOfBirth,
               mobilePhone: remoteUserData.mobilePhone,
               email: remoteUserData.email
-            }))}}
-          })
+            }
+            ))
+            setCurrentUser((prev) => ({
+              ...prev,
+              displayName: `${userData.firstName} ${userData.lastName}`
+
+            }))
+          }
+        }
+      })
       .catch((err) => console.log(err))
   })
 
