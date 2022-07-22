@@ -2,6 +2,7 @@ import React from 'react'
 import './index.css'
 import Date from '../Date/Date.js';
 import { options } from './type-options.js'
+// import ImgUpload from '../Upload/ImgUpload.js'
 
 export default function Add(props) {
 
@@ -18,7 +19,7 @@ export default function Add(props) {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        console.log(costItem);
+        // console.log(costItem);
         props.onAdd && props.onAdd(costItem);
     }
 
@@ -74,11 +75,9 @@ export default function Add(props) {
                         <span className='form__row__checkbox_checkmark'></span>
                     </label>
                 </div>
-                <div className='form__img_upload_btn'>
-                    <input type="file" className='form__img_upload_btn_input' 
-                        name="iconUrl" value={costItem.iconUrl} onChange={handleInputChange} />
-                    <img src={costItem.iconUrl} className='form__img_show' alt="icon" />
-                </div>
+
+                {/* <ImgUpload /> */}
+                    
                 {
                     props.formType === 'edit' 
                     ? 

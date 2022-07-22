@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import './expense.css'
+import { addDoc } from 'firebase/firestore'
+import {colRef} from '../../firebase-config'
 
 import Topbar from '../../components/Topbar/Topbar'
 import Table from '../../components/Table/Table'
@@ -8,7 +10,8 @@ import Add from '../../components/Form/ExpenseForm.js'
 
 export default function Expenses() {
 
-    const [maskStatus, setMaskStatus] = useState(false)
+    const [maskStatus, setMaskStatus] = useState(false);
+    
 
     const handleCreate = () => {
         setMaskStatus(true)
@@ -17,6 +20,23 @@ export default function Expenses() {
     const handleCloseMask = () => {
         setMaskStatus(false)
     }
+
+    const onAdd = async (costItem) => {
+        console.log('add');
+        console.log(costItem);
+        await addDoc(colRef, costItem);
+    };
+
+    // React.useEffect(() => {
+    //     const getList = async () => {
+    //       const data = await getDocs(colRef);
+    //       setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    //     };
+    
+    //     getList();
+    //   }, []);
+
+
     return (
         <>
             <main className="expenses">
@@ -47,10 +67,9 @@ export default function Expenses() {
                 maskStatus 
                 && 
                 <Mask onClose={ handleCloseMask } >
-                    <Add />
+                    <Add onAdd={onAdd} />
                 </Mask>
             }
-
         </>
     )
 }

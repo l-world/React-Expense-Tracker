@@ -143,7 +143,7 @@
   display: block;
   height: 50px;
   width: 50px;
-  background-image: url("./Icon/camera.svg");
+  /* background-image: url("./Icon/camera.svg"); */
   background-position: center center;
   background-repeat: no-repeat;
   position: absolute;

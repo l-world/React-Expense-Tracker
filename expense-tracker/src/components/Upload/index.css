@@ -1,0 +1,51 @@
+.upload {
+  position: relative;
+}
+.upload__btn {
+  position: relative;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(119, 119, 119, 0.4) 0%,
+    rgba(35, 35, 35, 0.1) 100%
+  );
+  backdrop-filter: blur(50px);
+}
+.upload_btn_input {
+  border: none;
+  outline: none;
+}
+.upload_btn_input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.upload_btn_input::before {
+  content: "";
+  display: block;
+  height: 50px;
+  width: 50px;
+  background-image: url("./Icon/camera.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.upload__progress_bar {
+  margin-top: 20px;
+}
+.img_show {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #333;
+  margin-left: 100px;
+  position: absolute;
+  top: 0;
+  left: 80px;
+}
