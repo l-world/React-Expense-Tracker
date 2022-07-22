@@ -145,7 +145,7 @@ function Setting() {
 
   return (
     <main className='dashboard'>
-      <Topbar headTitle="Setting" avatar={currentUser.photoURL} username={currentUser.displayName} />
+      <Topbar headTitle="Setting"/>
       <section className="dashboard__main">
         <form className="setting__main__content">
           <div className='setting__main__content_1'>
