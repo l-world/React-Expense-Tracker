@@ -28,6 +28,9 @@
   .dashboard__topbar__users_avatar {
     vertical-align: middle;
     margin-right: 12px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
   }
   .dashboard__topbar__users_name {
     font-family: "Kumbh Sans";

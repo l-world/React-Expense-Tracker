@@ -13,13 +13,13 @@ export default function Table(props) {
         props.onEdit && props.onEdit(id);
     }
 
-    React.useEffect(() => {
-        const getList = async () => {
-            const data = await getDocs(colRef);
-            setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        };
-        getList();
-    });
+    // React.useEffect(() => {
+    //     const getList = async () => {
+    //         const data = await getDocs(colRef);
+    //         setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    //     };
+    //     getList();
+    // },[]);
 
     const trElements = list.map((item, index) => {
         // console.log(item);
