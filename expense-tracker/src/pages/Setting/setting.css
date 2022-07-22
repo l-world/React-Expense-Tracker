@@ -1,5 +1,4 @@
 
-/* content */
 .setting__main__content{
     margin-left: 30px;
     width: 80%;
@@ -9,6 +8,15 @@
     grid-auto-rows: 70px;
     padding: 20px,60px,35px,20px;
 }
+
+form span{
+    color: #78778B;
+}
+
+form input::placeholder{
+    color: black;
+}
+
 .setting__main__content_1{
     grid-column-start: 1;
     grid-column-end: 3;
@@ -24,6 +32,8 @@
     width: 190px;
     cursor: pointer;
 }
+
+
 .setting__main__content_3{
     grid-column-start: 2;
     grid-column-end: 3;
@@ -69,4 +79,10 @@
     color: white;
     cursor: pointer;
     margin-top: 25px;
+}
+.err{
+    margin-top: 0px;
+    font-weight: 400;
+    font-size: 12px;
+    color: red;
 }

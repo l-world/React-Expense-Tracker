@@ -6,8 +6,12 @@ import {
     signInWithEmailAndPassword,
     signOut,
     signInWithPopup,
-    sendPasswordResetEmail
-  } from 'firebase/auth';
+    sendPasswordResetEmail,
+    updatePassword
+} from 'firebase/auth';
+import { updateProfile } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+
 
 const AuthContext = React.createContext()
 
@@ -18,48 +22,90 @@ export function useAuth() {
 
 export function AuthContextProvider({ children }) {
 
+    const [currentUser, setCurrentUser] = React.useState({
+        displayName: '',
+        email: '',
+        photoURL: '',
+        uid: '',
 
-    const [currentUser, setCurrentUser] = React.useState(null);
+    });
     const [loading, setLoading] = React.useState(true);
+    const [signErr, setSignErr]=React.useState();
 
-    function signup(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password);
+    const navigate = useNavigate()
+    function signup(email, password, displayNameP) {
+        console.log("create account")
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                updateProfile(auth.currentUser, {
+                    displayName: displayNameP
+                })
+            })
+            .then(() => {
+                console.log("did update displayName")
+                navigate('/')
+            })
+            .catch((error) => {
+                setSignErr(error.message);
+                console.log(error.message)})
     }
-
+    function updateDisplayName(firstName, lastName) {
+        updateProfile(auth.currentUser, {
+            displayName: `${firstName} ${lastName}`
+        })
+    }
     function login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password);
+        console.log("logining")
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                console.log("signed in")
+                navigate('/')
+            })
+            .catch((error) => {
+                setSignErr(error.message);
+                console.log(error.message)})
     }
 
     function logout() {
         signOut(auth);
     }
 
-
     function loginGoogle() {
         signInWithPopup(auth, provider)
     }
 
-    function forgetPassWord(email){
-        sendPasswordResetEmail(auth,email,{url:'http://localhost:3000/login'})
-        // .then(()=>{    
-        //   console.log(email)
-        //   alert("we successfully sent you an email with password reset link!")
-        // })
-        // .catch((err)=>console.log(err))
+    function forgetPassWord(email) {
+        sendPasswordResetEmail(auth, email, { url: 'http://localhost:3000/login' })
+            .then(() => {
+                console.log(email)
+                alert("we successfully sent you an email with password reset link!")
+            })
+            .catch((error) =>  {
+                setSignErr(error.message);
+                console.log(error.message)}
+            )
+    }
+
+    function updatePW(newPW){
+        updatePassword(auth.currentUser,newPW)
+        .then(()=>alert("set new password successfully"))
+        .catch((error)=>{
+            setSignErr(error.message);
+            console.log(error.message)})
     }
     React.useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            console.log(user)
+            if (user !== null) { console.log(`auth change:${user.uid}   ${user.displayName}`) }
+            else { console.log("auth change: null") }
             setCurrentUser(user);
             setLoading(false);
-        });
+            setSignErr(null);
+        })
     }, []);
-    // onAuthStateChanged(auth,(user)=>{
-    //     if(user){
-    //         getUserName = auth.currentUser.displayName;
+
 
     return (
-        <AuthContext.Provider value={{ currentUser, signup, login, logout ,loginGoogle,forgetPassWord}}>
+        <AuthContext.Provider value={{ currentUser, signup, login, logout, loginGoogle, signErr,forgetPassWord, setCurrentUser, updateDisplayName,updatePW }}>
             {!loading && children}
         </AuthContext.Provider>
     );

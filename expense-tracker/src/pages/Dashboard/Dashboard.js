@@ -3,7 +3,7 @@ import './dashboard.css'
 
 import Balance from './Icon/Balance'
 import NetflixIcon from './Icon/nf.svg'
-
+import { useAuth } from '../../components/AuthContext'
 import Topbar from '../../components/Topbar/Topbar'
 import { LineChart } from '../../components/Chart/Line.js'
 import Recentbar from '../../components/Recentbar/Recentbar'
@@ -13,6 +13,7 @@ import Group from '../../components/Group/Group.js'
 export default function Dashboard(props) {
 
     const [currentIndex, setCurrentIndex] = React.useState(0)
+    const { currentUser } = useAuth()
 
     const handleCardClick = (index) => {
         setCurrentIndex(index)
@@ -20,7 +21,7 @@ export default function Dashboard(props) {
 
     return (
         <main className='dashboard'>
-            <Topbar />
+            <Topbar avatar={currentUser.photoURL} username={currentUser.displayName} />
             <section className="dashboard__main">
                 <section className="dashboard__main__content">
                     <div className="dashboard__main__content__cards">
@@ -66,14 +67,14 @@ export default function Dashboard(props) {
                         <LineChart />
                     </div>
                     <div className="dashboard__main__content__recent content--box">
-                        <Recentbar title="Recent Expenses"/>
+                        <Recentbar title="Recent Expenses" />
                         <Table />
                     </div>
                 </section>
                 <section className="dashboard__main__wallet">
-                    <Recentbar title="Recurring Expenses"/>
+                    <Recentbar title="Recurring Expenses" />
                     <div className="dashboard__main__wallet_item">
-                        <Group imgPath={NetflixIcon}/>
+                        <Group imgPath={NetflixIcon} />
                         <h1 className='dashboard__main__wallet_item_cost'>-$132,00</h1>
                     </div>
                 </section>

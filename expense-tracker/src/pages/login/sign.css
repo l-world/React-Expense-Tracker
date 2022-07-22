@@ -1,5 +1,6 @@
 .sign {
     display: flex;
+    height: 100vh;
 }
 
 .sign-main {
@@ -36,7 +37,7 @@
     margin-bottom: 80px;
 }
 
-span {
+form span {
     font-family: 'Kumbh Sans';
     font-style: normal;
     font-weight: 550;
@@ -119,6 +120,12 @@ form>button {
     line-height: 20px;
     color: #1B212D;
     cursor: pointer;
+}
+
+form>button:disabled {
+    color: white;
+    cursor: none;
+    background-color: #a0a0a0;
 }
 
 .sign-guide-forgetPW{
