@@ -1,6 +1,6 @@
 import React from 'react'
-import { colRef } from '../../firebase-config'
-import { addDoc } from 'firebase/firestore'
+import { db } from '../../firebase-config'
+import { updateDoc,doc } from 'firebase/firestore'
 
 import Mask from '../../components/Mask/Mask.js';
 import Forms from '../../components/Form/ExpenseForm.js';
@@ -8,14 +8,15 @@ import Forms from '../../components/Form/ExpenseForm.js';
 export default function ExForm(props) {
 
     const onSave = async (costItem) => {
-        await addDoc(colRef, costItem);
+        const expenseDoc = doc(db, "expense", props.item.id);
+        await updateDoc(expenseDoc, costItem);
         props.onCloseMask();
         alert('Edited successfully');
         //刷新列表
     };
     
     const onCanel = async () => {
-
+        props.onCloseMask();
     }
     
     return (
