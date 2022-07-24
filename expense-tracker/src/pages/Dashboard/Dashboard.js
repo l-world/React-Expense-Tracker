@@ -1,5 +1,7 @@
 import React from 'react'
 import './dashboard.css'
+import { getDocs } from 'firebase/firestore'
+import {colRef} from '../../firebase-config'
 
 import Balance from './Icon/Balance'
 import NetflixIcon from './Icon/nf.svg'
@@ -11,7 +13,18 @@ import Group from '../../components/Group/Group.js'
 
 export default function Dashboard(props) {
 
-    const [currentIndex, setCurrentIndex] = React.useState(0)
+    const [list, setList] = React.useState([]);
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+
+    React.useEffect(() => {
+        const getList = async () => {
+            console.log('getList called');
+            const data = await getDocs(colRef);
+            setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        };
+        getList()
+    },[]);
+
 
     const handleCardClick = (index) => {
         setCurrentIndex(index)
@@ -66,7 +79,7 @@ export default function Dashboard(props) {
                     </div>
                     <div className="dashboard__main__content__recent content--box">
                         <Recentbar title="Recent Expenses" />
-                        <Table />
+                        <Table list={list}/>
                     </div>
                 </section>
                 <section className="dashboard__main__wallet">

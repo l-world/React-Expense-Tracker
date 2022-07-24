@@ -1,46 +1,54 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './expense.css'
-import { addDoc } from 'firebase/firestore'
-import {colRef} from '../../firebase-config'
+import { colRef } from '../../firebase-config'
+import { getDocs } from 'firebase/firestore'
 
 import Topbar from '../../components/Topbar/Topbar'
 import Table from '../../components/Table/Table'
-import Mask from '../../components/Mask/Mask'
-import Add from '../../components/Form/ExpenseForm.js'
+import Add from './Add'
+import Edit from './Edit'
 
 export default function Expenses() {
 
-    const [maskStatus, setMaskStatus] = useState(false);
-    
+    const [list, setList] = useState([]);
+    const [addMaskStatus, setAddMaskStatus] = useState(false);
+    const [editMaskStatus, setEditMaskStatus] = useState(false);
+    const [formType, setFormType] = useState('');
+    const [id,setId] = useState(null);
+
+    useEffect(() => {
+        const getList = async () => {
+            console.log('getList called');
+            const data = await getDocs(colRef);
+            setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        };
+        getList()
+    }, []);
+
 
     const handleCreate = () => {
-        setMaskStatus(true)
+        setAddMaskStatus(true);
+        setFormType('add');
     }
 
-    const handleCloseMask = () => {
-        setMaskStatus(false)
+    const onAddCloseMask = () => {
+        setAddMaskStatus(false)
     }
 
-    const onAdd = async (costItem) => {
-        console.log('add');
-        console.log(costItem);
-        await addDoc(colRef, costItem);
+    const onEdit = (item) => {
+        setEditMaskStatus(true);
+        setFormType('edit');
+        setId(item)
     };
 
-    // React.useEffect(() => {
-    //     const getList = async () => {
-    //       const data = await getDocs(colRef);
-    //       setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    //     };
-    
-    //     getList();
-    //   }, []);
-
+    const onEditCloseMask = () => {
+        setEditMaskStatus(false);
+    }
 
     return (
         <>
             <main className="expenses">
-                <Topbar headTitle="Expenses"/>
+                <Topbar headTitle="Expenses" />
                 <section className='expenses__main'>
                     <div className="expenses__main__search">
                         <input type="text" className="expenses__main__search_input" placeholder='Search anything on Transactions' />
@@ -57,17 +65,12 @@ export default function Expenses() {
                             <span className='search__btn_text'>Filters</span>
                         </button>
                     </div>
-
-                    <Table show={true} />
+                    <Table tableState={true} list={list}  onEdit={onEdit}/>
                 </section>
             </main>
-            {
-                maskStatus 
-                && 
-                <Mask onClose={ handleCloseMask } >
-                    <Add onAdd={onAdd} />
-                </Mask>
-            }
+            <Add maskStatus={addMaskStatus} onCloseMask={onAddCloseMask} formType={formType} />
+            <Edit maskStatus={editMaskStatus} onCloseMask={onEditCloseMask} formType={formType} item={id}/>
+
         </>
     )
 }

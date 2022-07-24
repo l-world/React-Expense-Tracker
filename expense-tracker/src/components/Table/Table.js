@@ -1,28 +1,17 @@
 import React from 'react'
 import './table.css'
-import { getDocs } from 'firebase/firestore'
-import { colRef } from '../../firebase-config'
 
 import Group from '../Group/Group'
 
 export default function Table(props) {
 
-    const [list, setList] = React.useState([]);
+    const list = props.list || [];
 
-    const handleEditClick = (id) => {
-        props.onEdit && props.onEdit(id);
+    const handleEdit = (item) => {
+        props.onEdit && props.onEdit(item);
     }
 
-    // React.useEffect(() => {
-    //     const getList = async () => {
-    //         const data = await getDocs(colRef);
-    //         setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    //     };
-    //     getList();
-    // },[]);
-
-    const trElements = list.map((item, index) => {
-        // console.log(item);
+    const trElements = list.length > 0 && list.map((item, index) => {
         return (
             <tr className='table__body_row' key={item.id}>
                 <td className='table__body_column_name'>
@@ -32,42 +21,32 @@ export default function Table(props) {
                 <td className='table__body_column_text text--black'>{item.amount}</td>
                 <td className='table__body_column_text  text--gray'>{item.date}</td>
                 {props.tableState ? <td className='table__body_column_text text--invoice'>{item.id}</td> : ''}
-                {props.tableState ? <td>
-                    <button
-                        className='table__body_column_btn text--black table__body_column_text'
-                        onClick={handleEditClick(item.id)}
-                    >
-                        Edit
-                    </button>
-                </td>
-                    :
-                    ''}
+                {props.tableState ? <td><button className='table__body_column_btn text--black table__body_column_text'
+                            onClick={ () => handleEdit(item) }> Edit </button></td> : ''}
             </tr>
         )
     })
 
     return (
-
-        <div className='table__wrap'>
-            <table className='table'>
-                <thead className='table__header'>
-                    <tr className='table__header_row'>
-                        <th>NAME/BUSINESS</th>
-                        <th>TYPE</th>
-                        <th>AMOUNT</th>
-                        <th>DATE</th>
-                        {props.tableState ? <th>INVOICE ID</th> : ''}
-                        {props.tableState ? <th>ACTION</th> : ''}
-                    </tr>
-                </thead>
-                {(list && list.length > 0) ?
+        <>
+            <div className='table__wrap'>
+                <table className='table'>
+                    <thead className='table__header'>
+                        <tr className='table__header_row'>
+                            <th>NAME/BUSINESS</th>
+                            <th>TYPE</th>
+                            <th>AMOUNT</th>
+                            <th>DATE</th>
+                            {props.tableState ? <th>INVOICE ID</th> : ''}
+                            {props.tableState ? <th>ACTION</th> : ''}
+                        </tr>
+                    </thead>
                     <tbody className='table__body'>
                         {trElements}
                     </tbody>
-                    :
-                    ""
-                }
-            </table>
-        </div>
+                </table>
+                {list.length === 0 ? <h1 className='table__tip'>There are no data in this table</h1> : ''}
+            </div>
+        </>
     )
 }

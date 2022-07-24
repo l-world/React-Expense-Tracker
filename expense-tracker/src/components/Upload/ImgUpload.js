@@ -1,6 +1,5 @@
 import React from 'react'
 import "./index.css"
-// import {  ,uploadBytesResumable } from "firebase/storage";
 import {
     ref,
     uploadBytes,
@@ -10,32 +9,34 @@ import { storage } from "../../firebase-config";
 
 export default function ImgUpload() {
 
-    const [progress, setProgress] = React.useState(0);
-    const [imageUpload, setImageUpload] = React.useState(null);
+    // const [progress, setProgress] = React.useState(0);
+    const [image, setImage] = React.useState(null);
     const [imageUrl, setImageUrl] = React.useState('');
 
     const handleChange = (e) => {
         e.preventDefault();
-        setImageUpload( e.target.files[0]);
+        setImage(e.target.files[0]);
         uploadFile();
     }
 
-    // const imagesListRef = ref(storage, "images/");
     const uploadFile = () => {
-        if (imageUpload == null) return;
-        const imageRef = ref(storage, `images/${imageUpload.name + new Date()}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            console.log(snapshot.bytesTransferred / snapshot.totalBytes);
-            const prog = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-              
-              setProgress(prog);
-            getDownloadURL(snapshot.ref).then((url) => {
-                console.log(url);
-                setImageUrl((prev) => [...prev, url]);
+        console.log('Uploading file...');
+        if (image == null) return;
+        const imageRef = ref(storage, `images/${image.name}`);
+        console.log(imageRef);
+        uploadBytes(imageRef, image)
+            .then((snapshot) => {
+                console.log('snapshot', snapshot);
+                getDownloadURL(imageRef).then((url) => {
+                    setImageUrl(url);
+                }).catch((error) => {
+                    console.log(error.message, "error getting the image url");
+                });
+                setImage(null);
+            })
+            .catch((error) => {
+                console.log(error.message);
             });
-        });
     };
 
     // React.useEffect(() => {
@@ -78,11 +79,11 @@ export default function ImgUpload() {
                 <input type="file" className='upload_btn_input'
                     name="itemImg" onChange={handleChange} />
             </div>
-            <h6 className='upload__progress_bar'>Uploading done {progress}%</h6>
+            {/* <h6 className='upload__progress_bar'>Uploading done {progress}%</h6> */}
             {
-                imageUrl ? <img className='img_show' alt="icon" src={imageUrl}/> : ""
+                imageUrl ? <img className='img_show' alt="icon" src={imageUrl} /> : ""
             }
-            
+
         </div>
     )
 }

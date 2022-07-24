@@ -66,3 +66,9 @@ th:first-of-type,
 .table__body_column_btn:active{
     box-shadow: inset 1px 1px 2px 0px rgba(0, 0, 0, 0.2);
 }
+
+.table__tip{
+    text-align: center;
+    margin-top: 50px;
+    font-size: 30px;
+}
