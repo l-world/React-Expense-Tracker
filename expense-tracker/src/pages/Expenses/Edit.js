@@ -17,9 +17,7 @@ export default function ExForm(props) {
     const onCanel = async () => {
 
     }
-
-    console.log(props.item);
-
+    
     return (
         <>
             {

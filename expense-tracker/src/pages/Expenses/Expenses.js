@@ -14,7 +14,7 @@ export default function Expenses() {
     const [addMaskStatus, setAddMaskStatus] = useState(false);
     const [editMaskStatus, setEditMaskStatus] = useState(false);
     const [formType, setFormType] = useState('');
-    const [id,setId] = useState(null);
+    const [item,setItem] = useState(null);
 
     useEffect(() => {
         const getList = async () => {
@@ -38,7 +38,7 @@ export default function Expenses() {
     const onEdit = (item) => {
         setEditMaskStatus(true);
         setFormType('edit');
-        setId(item)
+        setItem(item)
     };
 
     const onEditCloseMask = () => {
@@ -69,7 +69,7 @@ export default function Expenses() {
                 </section>
             </main>
             <Add maskStatus={addMaskStatus} onCloseMask={onAddCloseMask} formType={formType} />
-            <Edit maskStatus={editMaskStatus} onCloseMask={onEditCloseMask} formType={formType} item={id}/>
+            <Edit maskStatus={editMaskStatus} onCloseMask={onEditCloseMask} formType={formType} item={item}/>
 
         </>
     )
