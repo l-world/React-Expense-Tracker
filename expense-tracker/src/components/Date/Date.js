@@ -3,15 +3,21 @@ import './date.css'
 
 export default function Date(props) {
 
-    const [date,setDate] = React.useState(props.value);
-    const [flag,setFlag] = React.useState(true);
+    const [date,setDate] = React.useState('');
+    const [flag,setFlag] = React.useState();
 
     const handleChange = (e) => {
-        const date = e.target.value.replace(/-/g, '/');
-        setDate(date);
+        console.log('Date Change Event');
+        const dateForamt = e.target.value.replace(/-/g, '/');
+        setDate(dateForamt);
         e.target.value === '' ? setFlag(true) : setFlag(false);
         props.handleDateChange && props.handleDateChange(date);
     }
+
+    // useEffect(() => {
+    //     console.log('Date effect', props.flag);
+    //     setFlag(props.flag)
+    // },[props.flag])
 
     return (
         <div className='date'>
@@ -23,11 +29,11 @@ export default function Date(props) {
                 onChange={handleChange}
             />
             {
-                flag 
+                (props.flag || flag) 
                 ?  
                 <span className='date__text'>Date</span>
                 :
-                <span className='date__text text--color'>{date}</span>
+                <span className='date__text text--color'>{date || props.value}</span>
             }
         </div>
     )

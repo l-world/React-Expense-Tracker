@@ -113,7 +113,7 @@ export default function Add(props) {
                     name="title" value={costItem.title} onChange={handleInputChange} />
                 <input type="text" placeholder='Amount' className='form__input'
                     name="amount" value={costItem.amount} onChange={handleInputChange} />
-                <select className={`form__select form__input ${isSelected}`}
+                <select className={`form__select form__input ${isSelected} ${ (props.data && props.data.type) ? 'selected' : ''}`}
                     name="type" value={costItem.type} onChange={handleInputChange}
                 >
                     <option value="">Type</option>
@@ -122,10 +122,12 @@ export default function Add(props) {
                 <div className='form__row'>
                     <Date
                         handleDateChange={handleDateChange}
+                        flag={ (props.data && props.data.date) ? false : true}
+                        value={props.data && props.data.date} 
                     />
                     <label className='form__row__checkbox'>Recurring
                         <input type="checkbox" className='form__row__checkbox_input'
-                            name="recur" value={costItem.recur} onChange={handleInputChange} />
+                            name="recur" value={costItem.recur} onChange={handleInputChange} checked={costItem.recur || (props.data && props.data.recur)}/>
                         <span className='form__row__checkbox_checkmark'></span>
                     </label>
                 </div>
