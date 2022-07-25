@@ -1,7 +1,7 @@
 import React from 'react'
 import './dashboard.css'
 import { getDocs } from 'firebase/firestore'
-import {colRef} from '../../firebase-config'
+import { colRef } from '../../firebase-config'
 
 import Balance from './Icon/Balance'
 import NetflixIcon from './Icon/nf.svg'
@@ -11,20 +11,37 @@ import Recentbar from '../../components/Recentbar/Recentbar'
 import Table from '../../components/Table/Table.js'
 import Group from '../../components/Group/Group.js'
 
+import { expenseStat } from '../api.js'
+
+const titles = ['Total spending', 'Monthly spending', 'Daily spending'];
+
 export default function Dashboard(props) {
 
     const [list, setList] = React.useState([]);
     const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [spending, setSpending] = React.useState([])
 
     React.useEffect(() => {
         const getList = async () => {
-            console.log('getList called');
             const data = await getDocs(colRef);
             setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
         getList()
-    },[]);
+    }, []);
 
+    React.useEffect(() => {
+        async function getSpending() {
+            const spending = await expenseStat();
+            const result = spending.map( (item,index) => {
+                return {
+                    title: titles[index],
+                    value:item
+                }
+            })
+            setSpending(result); 
+        }
+        getSpending();
+    }, []);
 
     const handleCardClick = (index) => {
         setCurrentIndex(index)
@@ -32,13 +49,13 @@ export default function Dashboard(props) {
 
     return (
         <main className='dashboard'>
-            <Topbar headTitle={'Dashboard'}/>
+            <Topbar headTitle={'Dashboard'} />
             <section className="dashboard__main">
                 <section className="dashboard__main__content">
                     <div className="dashboard__main__content__cards">
                         <ul className='dashboard__main__content__cards_ul'   >
                             {
-                                new Array(3).fill(0).map((item, index) => {
+                                spending.map((item, index) => {
                                     return (
                                         <li
                                             className={
@@ -60,13 +77,13 @@ export default function Dashboard(props) {
                                                 />
                                             </div>
                                             <div className="dashboard__main__content__card_total">
-                                                <p className="dashboard__main__content__card_total_title">Monthly spending</p>
+                                                <p className="dashboard__main__content__card_total_title">{item.title}</p>
                                                 <h1
                                                     className={
                                                         `dashboard__main__content__card_total_cost 
                                                         ${currentIndex === index ? 'dashboard__main__content__card_total_cost--active' : ''}`
                                                     }
-                                                >$250.80</h1>
+                                                >{'$' + item.value}</h1>
                                             </div>
                                         </li>
                                     )
@@ -79,7 +96,7 @@ export default function Dashboard(props) {
                     </div>
                     <div className="dashboard__main__content__recent content--box">
                         <Recentbar title="Recent Expenses" />
-                        <Table list={list}/>
+                        <Table list={list} />
                     </div>
                 </section>
                 <section className="dashboard__main__wallet">
