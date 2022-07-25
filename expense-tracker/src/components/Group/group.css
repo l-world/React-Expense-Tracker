@@ -3,6 +3,9 @@
 }
 .group__img{
     margin-right: 14px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
 }
 .group__content{
     /* margin-right: auto; */

@@ -1,12 +1,21 @@
 import React, { useEffect } from 'react'
 import './index.css'
+
+import {
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+} from "firebase/storage";
+import { storage } from "../../firebase-config";
+
 import Date from '../Date/Date.js';
-import { options } from './type-options.js'
 import ImgUpload from '../Upload/ImgUpload.js'
+import { options } from './type-options.js'
 
 export default function Add(props) {
 
     const [isSelected, setIsSelected] = React.useState('');
+    const [progress, setProgress] = React.useState(0);
 
     const [costItem, setCostItem] = React.useState({
         title: "",
@@ -71,6 +80,28 @@ export default function Add(props) {
         setCostItem({ ...costItem, date: date });
     }
 
+    const uploadFile = async (file) => {
+        if (!file) {
+            alert("image is null");
+            return;
+        }
+        const imageRef = ref(storage, `images/${file.name}`);
+        const uploadTask = uploadBytesResumable(imageRef, file);
+        uploadTask.on( "state_changed",(snapshot) => {
+                const percent = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                )
+                setProgress(percent);
+            },
+            (err) => console.log('error',err),
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                    setCostItem({ ...costItem, iconUrl: url });
+                });
+            }
+        );
+    };
+
     const optionElements = options.map(item => {
         return <option key={item.value} value={item.value}>{item.label}</option>
     })
@@ -99,7 +130,7 @@ export default function Add(props) {
                     </label>
                 </div>
 
-                <ImgUpload />
+                <ImgUpload uploadFile={uploadFile} progress={progress} imageUrl={costItem.iconUrl}/>
 
                 {
                     props.formType === 'edit'

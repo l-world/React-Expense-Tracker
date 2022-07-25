@@ -1,89 +1,25 @@
 import React from 'react'
 import "./index.css"
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-} from "firebase/storage";
-import { storage } from "../../firebase-config";
 
-export default function ImgUpload() {
 
-    // const [progress, setProgress] = React.useState(0);
-    const [image, setImage] = React.useState(null);
-    const [imageUrl, setImageUrl] = React.useState('');
+export default function ImgUpload(props) {
 
     const handleChange = (e) => {
         e.preventDefault();
-        setImage(e.target.files[0]);
-        uploadFile();
+        if(e.target.files[0]){
+            props.uploadFile && props.uploadFile(e.target.files[0]);
+        }
     }
-
-    const uploadFile = () => {
-        console.log('Uploading file...');
-        if (image == null) return;
-        const imageRef = ref(storage, `images/${image.name}`);
-        console.log(imageRef);
-        uploadBytes(imageRef, image)
-            .then((snapshot) => {
-                console.log('snapshot', snapshot);
-                getDownloadURL(imageRef).then((url) => {
-                    setImageUrl(url);
-                }).catch((error) => {
-                    console.log(error.message, "error getting the image url");
-                });
-                setImage(null);
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
-    };
-
-    // React.useEffect(() => {
-    //     listAll(imagesListRef).then((response) => {
-    //         response.items.forEach((item) => {
-    //             getDownloadURL(item).then((url) => {
-    //                 setImageUrls((prev) => [...prev, url]);
-    //             });
-    //         });
-    //     });
-    // });
-    // console.log(imageUrl);
-    /* const uploadFiles = (file) => {
-        if (!file) return;
-        const sotrageRef = ref(storage, `files/${file.name}`);
-        const uploadTask = uploadBytesResumable(sotrageRef, file);
-    
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            console.log('snapshot', snapshot);
-            const prog = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-            setProgress(prog);
-          },
-          (error) => console.log('error',error),
-
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              console.log("File available at", downloadURL);
-            });
-          }
-        );
-      }; */
 
     return (
         <div className="upload">
             <div className='upload__btn'>
-                <input type="file" className='upload_btn_input'
-                    name="itemImg" onChange={handleChange} />
+                <input type="file" accept="image/*" onChange={handleChange} className='upload_btn_input' />
             </div>
-            {/* <h6 className='upload__progress_bar'>Uploading done {progress}%</h6> */}
+            <h6 className='upload__progress_bar'>Uploading done {props.progress}%</h6>
             {
-                imageUrl ? <img className='img_show' alt="icon" src={imageUrl} /> : ""
+                props.imageUrl ? <img className='img_show' alt="icon" src={props.imageUrl} />: ""
             }
-
         </div>
     )
 }
