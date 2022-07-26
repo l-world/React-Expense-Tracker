@@ -1,24 +1,21 @@
-import { query, where, onSnapshot, orderBy, getDocs } from 'firebase/firestore'
+import { query, orderBy, getDocs } from 'firebase/firestore'
 import { colRef } from '../firebase-config'
 
 
 export const getList = async () => {
-    const q = query(colRef, orderBy('date', 'desc')); //默认按日期降序排序
+    const q = query(colRef,orderBy('date', 'desc')); //默认按日期降序排序
     const data = await getDocs(q);
     const result = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     return result;
 };
 
-export const filter = async ({ name, operator, value }) => {
-    const q = query(colRef, where(name, operator, value));
-    let lists = []
-    onSnapshot(q, (snapshot) => {
-        snapshot.docs.forEach(doc => {
-            lists.push({ ...doc.data(), id: doc.id })
-        })
-    })
-    return lists;
-};
+// export const filterList = async ({value}) => {
+//     console.log(value);
+//     const q = query(colRef, where('amount','==',value),orderBy('date', 'desc'));
+//     const data = await getDocs(q);
+//     const result = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+//     return result;
+// };
 
 //Recent Expenses
 export const getRecentList = async () => {
@@ -32,7 +29,7 @@ export const getRecurList = async () => {
     return data.filter(item => item.recur);
 }
 
-
+// spending total
 export const getExpenseStat = async () => {
     const data = await getList();
     const nowDate = new Date();
