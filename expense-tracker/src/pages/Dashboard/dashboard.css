@@ -87,10 +87,17 @@
   flex: 1;
   /* border: 1px solid green; */
 }
+.dashboard__main__wallet_box{
 
+}
 .dashboard__main__wallet_item {
   display: flex;
-  margin-top: 25px;
+  border-bottom: 1px solid #eee;
+  margin-top: 12.5px;
+  padding-bottom: 12.5px;
+}
+.dashboard__main__wallet_item:last-of-type{
+    border-bottom: 0px;
 }
 
 .dashboard__main__wallet_item_cost {

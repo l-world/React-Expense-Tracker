@@ -22,7 +22,7 @@ export default function Add(props) {
         amount: "",
         type: "",
         date: "",
-        recur: "",
+        recur: false,
         iconUrl: "",
     })
 

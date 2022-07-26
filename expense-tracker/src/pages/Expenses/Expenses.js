@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './expense.css'
-import { colRef } from '../../firebase-config'
-import { getDocs } from 'firebase/firestore'
+import { getList } from '../api'
 
 import Topbar from '../../components/Topbar/Topbar'
 import Table from '../../components/Table/Table'
@@ -18,12 +17,11 @@ export default function Expenses() {
     const [item,setItem] = useState(null);
 
     useEffect(() => {
-        const getList = async () => {
-            console.log('getList called');
-            const data = await getDocs(colRef);
-            setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        const getLists = async () => {
+            const data = await getList();
+            setList(data);
         };
-        getList()
+        getLists()
     }, []);
 
 
