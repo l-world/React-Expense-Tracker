@@ -8,28 +8,39 @@ import {
   getDoc,
   doc,
   setDoc,
-  // onSnapshot
 } from 'firebase/firestore'
 
 function Setting() {
-  const { currentUser, setCurrentUser, updateDisplayName, updatePW ,signErr} = useAuth()
+  const { currentUser,  updateDisplayName, updatePW ,signErr} = useAuth()
   const [editState, setEditState] = React.useState(false)
-  const displayName_firstName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[0] : currentUser.displayName
-  const displayName_lastName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(' ')[1]
-    : "";
-
+  const displayName_firstName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(" ")[0] : currentUser.displayName;
+  const displayName_lastName = currentUser.displayName.indexOf(" ") !== -1 ? currentUser.displayName.split(" ")[1]: "";
   const id = currentUser.uid;
   const docRef = doc(db, "userProfile", id)
+
 
   const [userData, setUserData] = React.useState({
     id: currentUser.uid,
     firstName: displayName_firstName,
     lastName: displayName_lastName,
-    dateOfBirth: '',
-    mobilePhone: '',
+    dateOfBirth: "",
+    mobilePhone: "",
     email: currentUser.email
   })
 
+  React.useEffect(() => {
+    const getData = async () => {
+        console.log('getData called');
+        const data = await getDoc(docRef);
+        setUserData((prev)=>({
+          ...prev,
+          dateOfBirth: data.data().dateOfBirth,
+          mobilePhone: data.data().mobilePhone,
+    }))
+  }
+     getData()
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -53,31 +64,6 @@ function Setting() {
   }
 
 
-  React.useEffect(() => {
-    getDoc(docRef)
-      .then((remoteDoc) => {
-        if (remoteDoc) {
-          const remoteUserData = remoteDoc.data()
-          if (!editState) {
-            setUserData((prev) => ({
-              ...prev,
-              firstName: remoteUserData.firstName,
-              lastName: remoteUserData.lastName,
-              dateOfBirth: remoteUserData.dateOfBirth,
-              mobilePhone: remoteUserData.mobilePhone,
-              email: remoteUserData.email
-            }
-            ))
-            setCurrentUser((prev) => ({
-              ...prev,
-              displayName: `${userData.firstName} ${userData.lastName}`
-
-            }))
-          }
-        }
-      })
-      .catch((err) => console.log(err))
-  })
 
   function handleEdit() {
     setEditState(true)
@@ -162,7 +148,7 @@ function Setting() {
           <div className='setting__main__content_4'>
             <span> First Name</span>
             <input className='form-text' name="firstName" disabled={!editState} onChange={handleChange}
-              value={userData.firstName} placeholder={'Enter your last name'}
+              value={userData.firstName} placeholder={'Enter your first name'}
             />
           </div>
           <div className='setting__main__content_4'>
