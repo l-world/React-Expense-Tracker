@@ -33,7 +33,7 @@ export const options = {
                 usePointStyle: true,
                 generateLabels: (chart) => {
                     const { data } = chart;
-                    if (data.labels.length > 0 && data.datasets.length > 0) {
+                    if (data.labels && data.datasets.length > 0) {
                         return data.datasets.map((label, index) => {
                             const text = label.label;
                             return {
