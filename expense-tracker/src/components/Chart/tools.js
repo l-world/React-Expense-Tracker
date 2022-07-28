@@ -1,3 +1,5 @@
+import { getLineData } from '../../api.js'
+
 export const formatMonth = (month) => {
     switch (month) {
         case '01':
@@ -30,7 +32,8 @@ export const formatMonth = (month) => {
 }
 
 
-export const generateSats = (data) => {
+export const generateSats = async () => {
+    const data = await getLineData();
     let temp = {},
         labels = [],
         income = [],

@@ -10,7 +10,6 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { getLineData } from '../../api.js'
 
 import { generateSats } from './tools.js'
 
@@ -23,7 +22,8 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-const stats = generateSats(getLineData())
+// const lineData = await getLineData();
+const stats = generateSats();
 const labels = stats.labels;
 const income = stats.income;
 const expense = stats.expense;
