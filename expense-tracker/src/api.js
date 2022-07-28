@@ -66,7 +66,7 @@ export const getExpenseStat = async () => {
 
 
 //line chart data
-export const getLineData = async (period = 7) => {
+export const getLineData = async (period) => {
     const data = await getList();
     period = (+period)
     const today = moment(new Date()).format('YYYY/MM/D');

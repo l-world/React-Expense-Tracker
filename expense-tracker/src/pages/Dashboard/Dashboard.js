@@ -17,7 +17,7 @@ export default function Dashboard() {
     const [recentlist, setRecentList] = React.useState([]);
     const [recurList,setRecurList] = React.useState([]);
     const [spending, setSpending] = React.useState([]);
-    const [period, setPeriod] = React.useState([]);
+    const [period, setPeriod] = React.useState('');
 
     React.useEffect(() => {
         const getList = async () => {

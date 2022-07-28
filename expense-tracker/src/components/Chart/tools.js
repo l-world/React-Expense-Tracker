@@ -31,9 +31,8 @@ export const formatMonth = (month) => {
     }
 }
 
-
-export const generateSats = async () => {
-    const data = await getLineData();
+export const generateSats = async (period) => {
+    const data = await getLineData(period);
     let temp = {},
         labels = [],
         income = [],
@@ -49,7 +48,7 @@ export const generateSats = async () => {
             temp[dateRes] = (+line.amount);
         }
     })
-
+    // console.log(temp);
     for (const key in temp) {
         labels.push(key);
         if (temp[key] > 0) {
@@ -64,8 +63,7 @@ export const generateSats = async () => {
     labels = labels.reverse();
     income = income.reverse();
     expense = expense.reverse();
-    console.log(income);
-    console.log(expense);
+    console.log(labels,income, expense);
     return {
         labels,
         income,

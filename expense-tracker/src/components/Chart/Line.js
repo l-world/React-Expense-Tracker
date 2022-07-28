@@ -1,4 +1,7 @@
 import React from 'react';
+import { getLineData } from '../../api';
+import { formatMonth } from './tools'
+
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -9,9 +12,8 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
 
-import { generateSats } from './tools.js'
+import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
     CategoryScale,
@@ -22,11 +24,6 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-// const lineData = await getLineData();
-const stats = generateSats();
-const labels = stats.labels;
-const income = stats.income;
-const expense = stats.expense;
 
 export const options = {
     responsive: true,
@@ -54,7 +51,6 @@ export const options = {
                 },
             },
             fullWidth: false,
-
         },
         title: {
             display: true,
@@ -68,8 +64,8 @@ export const options = {
             },
             fullWidth: false,
         },
-        scales:{
-            y:{
+        scales: {
+            y: {
 
             },
             suggestedMin: 0,
@@ -79,11 +75,10 @@ export const options = {
 };
 
 export const data = {
-    labels,
     datasets: [
         {
             label: 'Income',
-            data: income,
+            data: [],
             borderColor: '#29A073',
             borderWidth: 2,
             pointStyle: 'circle',
@@ -94,7 +89,7 @@ export const data = {
         },
         {
             label: 'Expenses',
-            data: expense,
+            data: [],
             borderColor: '#C8EE44',
             borderWidth: 2,
             pointStyle: 'circle',
@@ -107,6 +102,47 @@ export const data = {
 };
 
 export function LineChart(props) {
-    console.log(props.period);
+    const generateSats = async () => {
+        const lineData = await getLineData(props.period || 7);
+        let temp = {},
+            labels = [],
+            income = [],
+            expense = [];
+        lineData.forEach(line => {
+            const dateArr = line.date.split('/');
+            const month = formatMonth(dateArr[1]);
+            const day = dateArr[2]
+            const dateRes = `${month} ${day}`;
+            if (temp[dateRes]) {
+                temp[dateRes] += (+line.amount);
+            } else {
+                temp[dateRes] = (+line.amount);
+            }
+        })
+        for (const key in temp) {
+            labels.push(key);
+            if (temp[key] > 0) {
+                income.push(temp[key]);
+                expense.push(0);
+            }
+            if (temp[key] < 0) {
+                expense.push(Math.abs(temp[key]));
+                income.push(0);
+            }
+        }
+        labels = labels.reverse();
+        income = income.reverse();
+        expense = expense.reverse();
+/*         console.log(labels, income, expense); */
+        data.labels = labels;
+        data.datasets[0].data = income;
+        data.datasets[1].data= expense;
+    }
+
+    generateSats();
+
+    // React.useEffect(() => {
+        
+    // })
     return <Line options={options} data={data} />;
 }
