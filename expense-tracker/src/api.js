@@ -1,6 +1,6 @@
 import { query, orderBy, getDocs } from 'firebase/firestore'
-import { colRef } from '../firebase-config'
-
+import { colRef } from './firebase-config'
+import moment from 'moment'
 
 export const getList = async () => {
     const q = query(colRef,orderBy('date', 'desc')); //默认按日期降序排序
@@ -56,9 +56,28 @@ export const getExpenseStat = async () => {
             DailySpend += (+spend.amount);
         }
     });
+    // console.log(`TotalSpend: ${TotalSpend}/${MonthlySpend}/${DailySpend}`);
     return [
         TotalSpend,
         MonthlySpend,
         DailySpend
     ]
+}
+
+
+//line chart data
+export const getLineData = async (period = 7) => {
+    const data = await getList();
+    period = (+period)
+    const today = moment(new Date()).format('YYYY/MM/D');
+    let lastDay;
+    if(period === 7 ){
+        lastDay = moment(new Date()).subtract(period,'days').format('YYYY/MM/DD');
+    }else{
+        lastDay = moment(new Date()).subtract(period,'months').format('YYYY/MM/DD');
+    }
+    const result = data.filter( item => {
+        return (item.date >= lastDay && item.date <= today) ? item : null;
+    });
+    return result;
 }

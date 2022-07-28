@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './expense.css'
-import { getList } from '../api'
+import { getList } from '../../api'
 import { query, orderBy,where, getDocs } from 'firebase/firestore'
 import { colRef } from '../../firebase-config'
 

@@ -8,7 +8,7 @@ import Recentbar from '../../components/Recentbar/Recentbar'
 import Table from '../../components/Table/Table.js'
 import Group from '../../components/Group/Group.js'
 
-import { getExpenseStat,getRecurList, getRecentList } from '../api.js'
+import { getExpenseStat,getRecurList, getRecentList } from '../../api'
 const titles = ['Total spending', 'Monthly spending', 'Daily spending'];
 
 export default function Dashboard() {
@@ -17,6 +17,7 @@ export default function Dashboard() {
     const [recentlist, setRecentList] = React.useState([]);
     const [recurList,setRecurList] = React.useState([]);
     const [spending, setSpending] = React.useState([]);
+    const [period, setPeriod] = React.useState([]);
 
     React.useEffect(() => {
         const getList = async () => {
@@ -35,15 +36,27 @@ export default function Dashboard() {
     }, []);
 
     React.useEffect(() => {
-        async function getRecurring() {
+        async function getRecurring() {            
             const data = await getRecurList();
             setRecurList(data);
         }
         getRecurring();
-    });
+    },[]);
+
+    // React.useEffect(() => {
+    //     async function getLines() {            
+    //         const data = await getLineData('7');  //默认展示近7天的数据
+    //         setLineData(data);
+    //     }
+    //     getLines();
+    // },[]);
 
     const handleCardClick = (index) => {
         setCurrentIndex(index)
+    }
+
+    const handlePeriodChange = async (e) => {
+        setPeriod(e.target.value);
     }
 
     return (
@@ -91,7 +104,14 @@ export default function Dashboard() {
                         </ul>
                     </div>
                     <div className="dashboard__main__content__graph content--box">
-                        <LineChart />
+                        <select name="period" id="period" onChange={ handlePeriodChange }>
+                            <option value="7">Last 7 days</option>
+                            <option value="1">Last 1 months</option>
+                            <option value="3">Last 3 months</option>
+                            <option value="6">Last 6 monthss</option>
+                            <option value="12">Last 12 months</option>
+                        </select>
+                        <LineChart period={period}/>
                     </div>
                     <div className="dashboard__main__content__recent content--box">
                         <Recentbar title="Recent Expenses" />

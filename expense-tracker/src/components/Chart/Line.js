@@ -10,7 +10,9 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import faker from 'faker';
+import { getLineData } from '../../api.js'
+
+import { generateSats } from './tools.js'
 
 ChartJS.register(
     CategoryScale,
@@ -21,36 +23,37 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
+const stats = generateSats(getLineData())
+const labels = stats.labels;
+const income = stats.income;
+const expense = stats.expense;
 
 export const options = {
     responsive: true,
     plugins: {
         legend: {
-            labels:{
-                usePointStyle:true,
+            labels: {
+                usePointStyle: true,
                 generateLabels: (chart) => {
-                   const {data} = chart;
-                   if( data.labels.length > 0 && data.datasets.length > 0) {
-                        return data.datasets.map( (label,index) => {
+                    const { data } = chart;
+                    if (data.labels.length > 0 && data.datasets.length > 0) {
+                        return data.datasets.map((label, index) => {
                             const text = label.label;
                             return {
                                 text,
-                                fillStyle:label.borderColor,
-                                strokeStyle:'transparent',
-                                datasetIndex:index,
-                                pointStyle:label.pointStyle,
-                                lineWidth:label.borderWidth,
-                                fontColor:"#1B212D"
+                                fillStyle: label.borderColor,
+                                strokeStyle: 'transparent',
+                                datasetIndex: index,
+                                pointStyle: label.pointStyle,
+                                lineWidth: label.borderWidth,
+                                fontColor: "#1B212D"
                                 // hidden:true,
                             }
                         })
-                   }
+                    }
                 },
             },
-            fullWidth:false,
+            fullWidth: false,
 
         },
         title: {
@@ -63,9 +66,15 @@ export const options = {
                 weight: 600,
                 size: '18px',
             },
-            fullWidth:false,
+            fullWidth: false,
         },
-        
+        scales:{
+            y:{
+
+            },
+            suggestedMin: 0,
+            suggestedMax: 1000
+        }
     },
 };
 
@@ -74,7 +83,7 @@ export const data = {
     datasets: [
         {
             label: 'Income',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
+            data: income,
             borderColor: '#29A073',
             borderWidth: 2,
             pointStyle: 'circle',
@@ -85,7 +94,7 @@ export const data = {
         },
         {
             label: 'Expenses',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
+            data: expense,
             borderColor: '#C8EE44',
             borderWidth: 2,
             pointStyle: 'circle',
@@ -97,6 +106,7 @@ export const data = {
     ],
 };
 
-export function LineChart() {
+export function LineChart(props) {
+    console.log(props.period);
     return <Line options={options} data={data} />;
 }
