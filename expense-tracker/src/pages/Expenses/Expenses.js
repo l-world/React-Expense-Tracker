@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './expense.css'
+import { getList } from '../../api'
+import { query, orderBy,where, getDocs } from 'firebase/firestore'
 import { colRef } from '../../firebase-config'
-import { getDocs } from 'firebase/firestore'
 
 import Topbar from '../../components/Topbar/Topbar'
 import Table from '../../components/Table/Table'
@@ -11,21 +12,19 @@ import Edit from './Edit'
 export default function Expenses() {
 
     const [list, setList] = useState([]);
-    const [searchKey,setSearchKey] = useState('');
+    const [searchKey, setSearchKey] = useState('');
     const [addMaskStatus, setAddMaskStatus] = useState(false);
     const [editMaskStatus, setEditMaskStatus] = useState(false);
     const [formType, setFormType] = useState('');
-    const [item,setItem] = useState(null);
+    const [item, setItem] = useState(null);
 
     useEffect(() => {
-        const getList = async () => {
-            console.log('getList called');
-            const data = await getDocs(colRef);
-            setList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        const getLists = async () => {
+            const data = await getList();
+            setList(data);
         };
-        getList()
+        getLists()
     }, []);
-
 
     const onCreate = () => {
         setAddMaskStatus(true);
@@ -47,11 +46,25 @@ export default function Expenses() {
     }
 
     const searchInputChange = (e) => {
+        console.log(e.target.value);
         setSearchKey(e.target.value);
     }
 
-    const onFilter = () => {
-        console.log('onFilter');
+    const onFilter = async () => {
+        if(searchKey){
+            console.log('search.....');
+            const q = query(colRef, where(' ', '==', searchKey), orderBy('date', 'desc'));
+            const data = await getDocs(q);
+            const result = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            console.log(result);
+            setList(result);
+        }
+    }
+
+    const handleSearchEnter = (e) => {
+        if (e.key === 'Enter') {
+            onFilter();
+        }
     }
 
     return (
@@ -60,7 +73,13 @@ export default function Expenses() {
                 <Topbar headTitle="Expenses" />
                 <section className='expenses__main'>
                     <div className="expenses__main__search">
-                        <input type="text" className="expenses__main__search_input" placeholder='Search anything on Transactions' value={searchKey} onChange={searchInputChange} />
+                        <input type="text"
+                            className="expenses__main__search_input"
+                            placeholder='Search anything on Transactions'
+                            value={searchKey}
+                            onChange={searchInputChange}
+                            onKeyDown={handleSearchEnter}
+                        />
                         <button className="expenses__main__search_create search__btn" onClick={onCreate}>
                             <svg className='search__btn_icon' width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13 13.1667H3V11.5001H13V13.1667ZM13 9.83342H3V8.16675H13V9.83342ZM13 6.50008H3V4.83342H13V6.50008ZM0.5 17.3334L1.75 16.0834L3 17.3334L4.25 16.0834L5.5 17.3334L6.75 16.0834L8 17.3334L9.25 16.0834L10.5 17.3334L11.75 16.0834L13 17.3334L14.25 16.0834L15.5 17.3334V0.666748L14.25 1.91675L13 0.666748L11.75 1.91675L10.5 0.666748L9.25 1.91675L8 0.666748L6.75 1.91675L5.5 0.666748L4.25 1.91675L3 0.666748L1.75 1.91675L0.5 0.666748V17.3334Z" fill="#1B212D" />
@@ -74,11 +93,11 @@ export default function Expenses() {
                             <span className='search__btn_text'>Filters</span>
                         </button>
                     </div>
-                    <Table tableState={true} list={list}  onEdit={onEdit}/>
+                    <Table tableState={true} list={list} onEdit={onEdit} />
                 </section>
             </main>
             <Add maskStatus={addMaskStatus} onCloseMask={onAddCloseMask} formType={formType} />
-            <Edit maskStatus={editMaskStatus} onCloseMask={onEditCloseMask} formType={formType} item={item}/>
+            <Edit maskStatus={editMaskStatus} onCloseMask={onEditCloseMask} formType={formType} item={item} />
         </>
     )
 }

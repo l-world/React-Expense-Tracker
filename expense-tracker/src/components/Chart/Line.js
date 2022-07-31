@@ -1,4 +1,7 @@
 import React from 'react';
+import { getLineData } from '../../api';
+import { formatMonth } from './tools'
+
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -9,8 +12,8 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+
 import { Line } from 'react-chartjs-2';
-import faker from 'faker';
 
 ChartJS.register(
     CategoryScale,
@@ -22,36 +25,32 @@ ChartJS.register(
     Legend
 );
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-
 export const options = {
     responsive: true,
     plugins: {
         legend: {
-            labels:{
-                usePointStyle:true,
+            labels: {
+                usePointStyle: true,
                 generateLabels: (chart) => {
-                   const {data} = chart;
-                   if( data.labels.length > 0 && data.datasets.length > 0) {
-                        return data.datasets.map( (label,index) => {
+                    const { data } = chart;
+                    if (data.labels && data.datasets.length > 0) {
+                        return data.datasets.map((label, index) => {
                             const text = label.label;
                             return {
                                 text,
-                                fillStyle:label.borderColor,
-                                strokeStyle:'transparent',
-                                datasetIndex:index,
-                                pointStyle:label.pointStyle,
-                                lineWidth:label.borderWidth,
-                                fontColor:"#1B212D"
+                                fillStyle: label.borderColor,
+                                strokeStyle: 'transparent',
+                                datasetIndex: index,
+                                pointStyle: label.pointStyle,
+                                lineWidth: label.borderWidth,
+                                fontColor: "#1B212D"
                                 // hidden:true,
                             }
                         })
-                   }
+                    }
                 },
             },
-            fullWidth:false,
-
+            fullWidth: false,
         },
         title: {
             display: true,
@@ -63,18 +62,23 @@ export const options = {
                 weight: 600,
                 size: '18px',
             },
-            fullWidth:false,
+            fullWidth: false,
         },
-        
+        scales: {
+            y: {
+
+            },
+            suggestedMin: 0,
+            suggestedMax: 1000
+        }
     },
 };
 
 export const data = {
-    labels,
     datasets: [
         {
             label: 'Income',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
+            data: [],
             borderColor: '#29A073',
             borderWidth: 2,
             pointStyle: 'circle',
@@ -85,7 +89,7 @@ export const data = {
         },
         {
             label: 'Expenses',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
+            data: [],
             borderColor: '#C8EE44',
             borderWidth: 2,
             pointStyle: 'circle',
@@ -97,6 +101,48 @@ export const data = {
     ],
 };
 
-export function LineChart() {
+export function LineChart(props) {
+    const generateSats = async () => {
+        const lineData = await getLineData(props.period || 7);
+        let temp = {},
+            labels = [],
+            income = [],
+            expense = [];
+        lineData.forEach(line => {
+            const dateArr = line.date.split('/');
+            const month = formatMonth(dateArr[1]);
+            const day = dateArr[2]
+            const dateRes = `${month} ${day}`;
+            if (temp[dateRes]) {
+                temp[dateRes] += (+line.amount);
+            } else {
+                temp[dateRes] = (+line.amount);
+            }
+        })
+        for (const key in temp) {
+            labels.push(key);
+            if (temp[key] > 0) {
+                income.push(temp[key]);
+                expense.push(0);
+            }
+            if (temp[key] < 0) {
+                expense.push(Math.abs(temp[key]));
+                income.push(0);
+            }
+        }
+        labels = labels.reverse();
+        income = income.reverse();
+        expense = expense.reverse();
+/*         console.log(labels, income, expense); */
+        data.labels = labels;
+        data.datasets[0].data = income;
+        data.datasets[1].data= expense;
+    }
+
+    generateSats();
+
+    // React.useEffect(() => {
+        
+    // })
     return <Line options={options} data={data} />;
 }
