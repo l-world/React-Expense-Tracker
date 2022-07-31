@@ -29,6 +29,8 @@ function Setting() {
   })
 
   React.useEffect(() => {
+    setDoc(docRef, userData)
+
     const getData = async () => {
         console.log('getData called');
         const data = await getDoc(docRef);

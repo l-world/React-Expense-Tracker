@@ -5,7 +5,7 @@ import { useAuth } from '../../components/AuthContext'
 
 export default function Topbar(props) {
     const { currentUser } = useAuth()
-    const displayName= currentUser.displayName===null||" "?'Anonymous':currentUser.displayName;
+    const displayName= currentUser.displayName==null||""?'Anonymous':currentUser.displayName;
     return (
         <header className="dashboard__topbar">
             <h3 className="dashboard__topbar__title">{props.headTitle || 'Dashboard'}</h3>
